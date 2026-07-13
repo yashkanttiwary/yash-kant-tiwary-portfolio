@@ -2,6 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const resumeUrl = `${basePath}/Yash_Kant_Tiwary_Resume.pdf`;
+
 type Project = {
   slug: string;
   layer: string;
@@ -347,7 +350,7 @@ export default function Home() {
             <div className="chips"><span>Creative Producer</span><span>Strategy · Video · AI</span><span>Bangalore, India</span></div>
             <h1><span>YASH</span><span className="accent-line">KANT</span><span>TIWARY</span></h1>
             <p className="hero-tagline">I build <em>creative systems that perform</em> — turning audience insight, production craft, and AI-assisted workflows into videos and campaigns that ship at scale.</p>
-            <div className="hero-actions"><a className="button primary" href="#work">View selected work</a><a className="button" href="/Yash_Kant_Tiwary_Resume.pdf" download>Download résumé</a></div>
+            <div className="hero-actions"><a className="button primary" href="#work">View selected work</a><a className="button" href={resumeUrl} download>Download résumé</a></div>
             <div className="scroll-cue"><span>Scroll to scrub the production timeline</span><i /></div>
             <div className="format-meta"><span>100+ videos / month</span><span>200–300 creatives</span><span>Layer 0 · Cover</span><span>@yashkanttiwary</span></div>
           </div>
@@ -428,7 +431,7 @@ export default function Home() {
           <h2>Let’s build creative<br />worth <em>measuring.</em></h2>
           <p>Open to creative production, creative strategy, campaign, content, and AI-enabled workflow opportunities.</p>
           <p className="contact-line">Bangalore, India · <a href="mailto:Yashkanttiwary@gmail.com">Yashkanttiwary@gmail.com</a> · <a href="tel:+918383069094">+91 8383069094</a></p>
-          <div className="contact-actions"><a className="button primary" href="mailto:Yashkanttiwary@gmail.com">Start a conversation</a><a className="button" href="/Yash_Kant_Tiwary_Resume.pdf" download>Export résumé</a></div>
+          <div className="contact-actions"><a className="button primary" href="mailto:Yashkanttiwary@gmail.com">Start a conversation</a><a className="button" href={resumeUrl} download>Export résumé</a></div>
           <div className="social-slots"><div><strong>LinkedIn</strong><span>Add profile URL</span></div><div><strong>Behance</strong><span>Add portfolio URL</span></div><div><strong>Video portfolio</strong><span>Add reel URL</span></div></div>
           <footer><span>© 2026 Yash Kant Tiwary</span><span>Produced in Premiere · Strategised in research · Accelerated with AI</span><strong>{timecode}</strong></footer>
         </section>
