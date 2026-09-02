@@ -23,7 +23,7 @@ test("renders the complete editing-suite portfolio and production metadata", asy
   await expect(page.locator("main section")).toHaveCount(7);
   await expect(page.locator(".clip")).toHaveCount(5);
   await expect(page.locator(".frame")).toHaveCount(5);
-  await expect(page.locator("#wave i")).toHaveCount(180);
+  await expect(page.locator("#wave span")).toHaveCount(180);
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
   await expect(page.getByText("TBD", { exact: true })).toHaveCount(0);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /\/og\.png$/);
@@ -36,6 +36,30 @@ test("renders the complete editing-suite portfolio and production metadata", asy
   for (const asset of conceptAssets) {
     expect((await request.get(asset)).ok(), `missing deployed asset: ${asset}`).toBeTruthy();
   }
+});
+
+test("exposes a valid section outline without decorative emphasis semantics", async ({ page }) => {
+  await page.goto("/?skip=1");
+  await expect(page.getByRole("heading", { level: 2 })).toHaveCount(6);
+  await expect(page.locator("main section[aria-labelledby]")).toHaveCount(7);
+  await expect(page.locator("i, em")).toHaveCount(0);
+  await expect(page.locator("#exif")).not.toHaveAttribute("aria-live");
+
+  const invalidLabels = await page.locator("main section").evaluateAll((sections) => sections.filter((section) => {
+    const labelId = section.getAttribute("aria-labelledby");
+    return !labelId || !document.getElementById(labelId);
+  }).length);
+  expect(invalidLabels).toBe(0);
+});
+
+test("keeps focus inside the opening clapper until it clears", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  const slate = page.locator("#slate");
+  await expect(slate).toBeVisible();
+  await expect(slate).toBeFocused();
+  await expect(page.locator("#main")).toHaveJSProperty("inert", true);
+  await expect(slate).toBeHidden();
+  await expect(page.locator("#main")).toHaveJSProperty("inert", false);
 });
 
 test("does not overflow at supported viewport boundaries", async ({ page }) => {
@@ -105,7 +129,9 @@ test("supports stage, career, and contact-sheet inspectors", async ({ page }) =>
   await page.getByRole("button", { name: "2025 AI systems" }).click();
   await expect(page.locator("#pathinfo")).toContainText("craft, operations and tooling");
 
-  await page.getByRole("button", { name: "Open concept frame 03" }).focus();
+  const frame = page.getByRole("button", { name: "Open concept frame 03" });
+  await frame.focus();
+  await expect(frame).toHaveAccessibleDescription("24mm, f/8.0, 1/125, ISO 400");
   await expect(page.locator("#exif")).toContainText("24mm");
 });
 

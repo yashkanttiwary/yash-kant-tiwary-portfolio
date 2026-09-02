@@ -45,6 +45,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-
 .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
 ::selection{background:var(--mark);color:#0A0C0B}
 :focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 
 /* skip link (I4) */
 .skiplink{position:absolute;left:8px;top:-60px;z-index:500;background:var(--surface2);color:var(--ink);
@@ -99,7 +101,8 @@ body.cursor-on #cur{display:block}
 main{margin-left:var(--rail);padding-bottom:calc(var(--bar) + 28px)}
 section{position:relative;padding:0 var(--pad) 52px;scroll-margin-top:18px}
 #system{padding-top:14px}
-.slug{display:flex;align-items:baseline;gap:13px;border-top:1px solid var(--rule);padding-top:13px;margin-bottom:34px}
+.slug{display:flex;align-items:baseline;gap:13px;border-top:1px solid var(--rule);padding-top:13px;margin-bottom:34px;
+  font-size:inherit;font-weight:400;line-height:inherit}
 .slug .tc{color:var(--mark);font-size:10.5px;letter-spacing:.08em}
 .slug .lbl{color:var(--ink);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase}
 .slug .rule{flex:1;height:1px;background:var(--rule)}
@@ -127,7 +130,7 @@ h1 .l2{display:block;color:var(--dim)}
 .brk.bl{bottom:9px;left:9px;border-right:0;border-top:0}.brk.br{bottom:9px;right:9px;border-left:0;border-top:0}
 .recdot{position:absolute;top:12px;left:32px;display:flex;align-items:center;gap:7px;
   font-family:'JetBrains Mono',monospace;font-size:var(--xs);letter-spacing:.14em;color:var(--chrome)}
-.recdot i{width:6px;height:6px;border-radius:50%;background:var(--rec);animation:blink 1.6s infinite}
+.recdot .rec-led{width:6px;height:6px;border-radius:50%;background:var(--rec);animation:blink 1.6s infinite}
 @keyframes blink{0%,45%{opacity:1}55%,100%{opacity:.2}}
 .montc{position:absolute;top:12px;right:32px;font-family:'JetBrains Mono',monospace;font-size:var(--xs);
   letter-spacing:.14em;color:var(--chrome)}
@@ -155,8 +158,8 @@ h1 .l2{display:block;color:var(--dim)}
 .thumb::before{content:"";position:absolute;inset:0;
   background-image:repeating-linear-gradient(115deg,transparent 0 24px,rgba(255,255,255,.014) 24px 48px)}
 .thumb .strip{position:absolute;left:0;right:0;top:0;height:13px;display:flex;gap:2px;padding:3px;z-index:2}
-.thumb .strip i{flex:1;background:var(--rule);opacity:.55;transition:.12s}
-.thumb .strip i.act{background:var(--mark);opacity:1}
+.thumb .strip span{flex:1;background:var(--rule);opacity:.55;transition:.12s}
+.thumb .strip span.act{background:var(--mark);opacity:1}
 .thumb .ph{position:absolute;top:0;bottom:0;width:1px;background:var(--mark);opacity:0;transition:opacity .15s;z-index:2}
 .thumb:hover .ph{opacity:.75}
 .clipmeta{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;
@@ -286,8 +289,8 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   border-right:1px solid var(--mark);display:none;pointer-events:none}
 #region.on{display:block}
 #wave{position:absolute;inset:0;display:flex;align-items:center;gap:1px}
-#wave i{flex:1;background:var(--rule)}
-#wave i.past{background:var(--wavepast)}
+#wave span{flex:1;background:var(--rule)}
+#wave span.past{background:var(--wavepast)}
 #head{position:absolute;top:0;bottom:0;width:1px;background:var(--mark);pointer-events:none}
 #head::before{content:"";position:absolute;top:-1px;left:-4px;width:9px;height:7px;background:var(--mark);
   clip-path:polygon(0 0,100% 0,50% 100%)}
@@ -404,7 +407,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 .btn .ic{width:28px;height:28px;border:1px solid var(--mark);color:var(--mark);display:grid;
   place-items:center;flex:none;font-size:11px;letter-spacing:0}
 .btn b{display:block;font-weight:500;color:var(--ink);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase}
-.btn em{display:block;font-style:normal;margin-top:4px;color:var(--chrome);font-size:var(--xs);
+.btn .btnmeta{display:block;margin-top:4px;color:var(--chrome);font-size:var(--xs);
   letter-spacing:.06em;text-transform:none}
 .decknote{margin-top:14px;font-size:.92rem;color:var(--dim);max-width:44ch}
 
@@ -434,7 +437,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .rv{opacity:1;transform:none;transition:none}
-  .recdot i{animation:none}
+  .recdot .rec-led{animation:none}
   #slate{display:none}
 }
 </style>
@@ -471,8 +474,8 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 </nav>
 
 <main id="main">
-<section id="top" data-mk="REEL">
-  <h1>Yash Kant<span class="l2">Tiwary</span></h1>
+<section id="top" data-mk="REEL" aria-labelledby="top-heading">
+  <h1 id="top-heading">Yash Kant<span class="l2">Tiwary</span></h1>
   <p class="hline">Creative producer. Video at volume. Bangalore.</p>
   <div class="hlinks">
     <a href="#work"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12"></rect><path d="M2.5 8h15M6 4v4m4-4v4m4-4v4"></path></svg></span><span>The work</span></a>
@@ -483,15 +486,15 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   <button class="monitor rv" id="monitor" data-cur="PLAY REEL" data-kind="video" data-src="/media/hero-loop.mp4" data-poster="/media/hero-poster.jpg" data-alt="A filmmaker setting up a camera in a color-lit studio" aria-label="Play concept showreel">
     <span class="safe" aria-hidden="true"></span>
     <span class="brk tl"></span><span class="brk tr"></span><span class="brk bl"></span><span class="brk br"></span>
-    <span class="recdot mono"><i></i>REC</span>
+    <span class="recdot mono"><span class="rec-led"></span>REC</span>
     <span class="montc mono" id="montc">00:00:00:00</span>
     <span class="play" aria-hidden="true">▶</span>
     <span class="monbtm mono"><span>REEL_2026_MASTER.MP4</span><span>1920×1080 · 24P</span><span>01:14</span></span>
   </button>
 </section>
 
-<section id="scale" data-mk="SCALE">
-  <div class="slug mono"><span class="tc">00:12</span><span class="lbl">Scale</span><span class="rule"></span><span class="rt">Readout</span></div>
+<section id="scale" data-mk="SCALE" aria-labelledby="scale-heading">
+  <h2 class="slug mono" id="scale-heading"><span class="tc">00:12</span><span class="lbl">Scale</span><span class="rule"></span><span class="rt">Readout</span></h2>
   <div class="readout rv">
     <div><div class="v mono">100+</div><div class="k">Videos a month</div></div>
     <div><div class="v mono">200–300</div><div class="k">Creatives a month</div></div>
@@ -500,12 +503,12 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   </div>
 </section>
 
-<section id="work" data-mk="WORK">
-  <div class="slug mono"><span class="tc">00:28</span><span class="lbl">Selected work</span><span class="rule"></span><span class="rt" id="workrt">5 clips</span></div>
+<section id="work" data-mk="WORK" aria-labelledby="work-heading">
+  <h2 class="slug mono" id="work-heading"><span class="tc">00:28</span><span class="lbl">Selected work</span><span class="rule"></span><span class="rt" id="workrt">5 clips</span></h2>
 
   <article class="clip rv" data-title="PW IOI MBA launch">
     <button class="thumb" style="--media:url('/media/case-mba-launch.webp')" data-cur="OPEN" data-kind="image" data-src="/media/case-mba-launch.webp" data-alt="A professional camera crew filming a live event under magenta stage lights" data-file="PWIOI_MBA_LAUNCH.MP4" data-tc="00:00:28:04" aria-label="Open PW IOI MBA launch concept clip">
-      <span class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>PWIOI_MBA_LAUNCH.MP4</span><span class="tcout">00:00:28:04</span></span>
     </button>
@@ -522,7 +525,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
   <article class="clip rv" data-title="Skillshala">
     <button class="thumb" style="--media:url('/media/case-skillshala.webp')" data-cur="OPEN" data-kind="image" data-src="/media/case-skillshala.webp" data-alt="A film crew preparing a studio camera and production plan" data-file="SKILLSHALA_CAMPAIGN.MP4" data-tc="00:00:51:17" aria-label="Open Skillshala concept clip">
-      <span class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>SKILLSHALA_CAMPAIGN.MP4</span><span class="tcout">00:00:51:17</span></span>
     </button>
@@ -539,7 +542,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
   <article class="clip rv" data-title="Unfair Advantage 2.0">
     <button class="thumb" style="--media:url('/media/case-unfair-advantage.webp')" data-cur="OPEN" data-kind="image" data-src="/media/case-unfair-advantage.webp" data-alt="Defocused event lights forming a vivid campaign-like field of color" data-file="UNFAIR_ADVANTAGE_2.MP4" data-tc="00:01:12:09" aria-label="Open Unfair Advantage 2.0 concept clip">
-      <span class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>UNFAIR_ADVANTAGE_2.MP4</span><span class="tcout">00:01:12:09</span></span>
     </button>
@@ -556,7 +559,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
   <article class="clip rv" data-title="Two channels, from zero">
     <button class="thumb" style="--media:url('/media/case-youtube-channels.webp')" data-cur="OPEN" data-kind="image" data-src="/media/case-youtube-channels.webp" data-alt="A creator working at a color-grading and video-editing desk" data-file="YT_CHANNELS_CUT.MP4" data-tc="00:01:33:22" aria-label="Open Two channels concept clip">
-      <span class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>YT_CHANNELS_CUT.MP4</span><span class="tcout">00:01:33:22</span></span>
     </button>
@@ -573,7 +576,7 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
   <article class="clip rv" data-title="Volume">
     <button class="thumb" style="--media:url('/media/case-volume.webp')" data-cur="OPEN" data-kind="image" data-src="/media/case-volume.webp" data-alt="A professional cinema-camera team working on a studio production" data-file="VOLUME_MONTAGE.MP4" data-tc="00:01:55:11" aria-label="Open Volume montage concept clip">
-      <span class="strip" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>VOLUME_MONTAGE.MP4</span><span class="tcout">00:01:55:11</span></span>
     </button>
@@ -589,8 +592,8 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   </article>
 </section>
 
-<section id="system" data-mk="SYSTEM">
-  <div class="slug mono"><span class="tc">02:04</span><span class="lbl">How it's made</span><span class="rule"></span><span class="rt">Call sheet</span></div>
+<section id="system" data-mk="SYSTEM" aria-labelledby="system-heading">
+  <h2 class="slug mono" id="system-heading"><span class="tc">02:04</span><span class="lbl">How it's made</span><span class="rule"></span><span class="rt">Call sheet</span></h2>
   <div class="callsheet rv">
     <div class="cshead mono">
       <span>Doc <b>PRODUCTION_SYSTEM_V4</b></span>
@@ -621,8 +624,8 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   </div>
 </section>
 
-<section id="path" data-mk="PATH">
-  <div class="slug mono"><span class="tc">02:31</span><span class="lbl">How he got here</span><span class="rule"></span><span class="rt">2017 — now</span></div>
+<section id="path" data-mk="PATH" aria-labelledby="path-heading">
+  <h2 class="slug mono" id="path-heading"><span class="tc">02:31</span><span class="lbl">How he got here</span><span class="rule"></span><span class="rt">2017 — now</span></h2>
   <p class="rulerline rv">From one camera to a content system. Nothing in between was wasted.</p>
   <div class="ruler rv" id="ruler">
     <button data-d="A camera and a fine-arts photography course. Everything downstream is still built on framing."><span class="y mono">2017</span><span class="l">Photography</span></button>
@@ -638,22 +641,22 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   <div id="pathinfo" class="rv" role="status" aria-live="polite"><b>2017 — now</b>Click any point to see what it added.</div>
 </section>
 
-<section id="sheet" data-mk="SHEET">
-  <div class="slug mono"><span class="tc">02:52</span><span class="lbl">Contact sheet</span><span class="rule"></span><span class="rt">Personal · roll 01</span></div>
+<section id="sheet" data-mk="SHEET" aria-labelledby="sheet-heading">
+  <h2 class="slug mono" id="sheet-heading"><span class="tc">02:52</span><span class="lbl">Contact sheet</span><span class="rule"></span><span class="rt">Personal · roll 01</span></h2>
   <div class="sheet rv" id="sheetgrid">
-    <button class="frame" style="--media:url('/media/playground-water.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-water.webp" data-alt="Ocean waves folding over a rocky shoreline from above" data-n="01" data-ex="35mm · f/2.0 · 1/400 · ISO 200" aria-label="Open concept frame 01"><span class="im"></span><span class="num">01</span></button>
-    <button class="frame" style="--media:url('/media/playground-morning.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-morning.webp" data-alt="A quiet peach sunrise over the ocean" data-n="02" data-ex="50mm · f/1.8 · 1/1000 · ISO 100" aria-label="Open concept frame 02"><span class="im"></span><span class="num">02</span></button>
-    <button class="frame" style="--media:url('/media/playground-landscape.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-landscape.webp" data-alt="A still lake and mountain silhouettes at first light" data-n="03" data-ex="24mm · f/8.0 · 1/125 · ISO 400" aria-label="Open concept frame 03"><span class="im"></span><span class="num">03</span></button>
-    <button class="frame" style="--media:url('/media/playground-portrait.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-portrait.webp" data-alt="A cinematic portrait shaped by saturated light and shadow" data-n="04" data-ex="85mm · f/1.4 · 1/2000 · ISO 100" aria-label="Open concept frame 04"><span class="im"></span><span class="num">04</span></button>
-    <button class="frame" style="--media:url('/media/playground-travel.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-travel.webp" data-alt="A solitary figure facing a calm lake at dawn" data-n="05" data-ex="35mm · f/5.6 · 1/60 · ISO 800" aria-label="Open concept frame 05"><span class="im"></span><span class="num">05</span></button>
+    <button class="frame" style="--media:url('/media/playground-water.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-water.webp" data-alt="Ocean waves folding over a rocky shoreline from above" data-n="01" data-ex="35mm · f/2.0 · 1/400 · ISO 200" aria-label="Open concept frame 01" aria-describedby="frame-01-detail"><span class="im"></span><span class="num">01</span><span class="sr-only" id="frame-01-detail">35mm, f/2.0, 1/400, ISO 200</span></button>
+    <button class="frame" style="--media:url('/media/playground-morning.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-morning.webp" data-alt="A quiet peach sunrise over the ocean" data-n="02" data-ex="50mm · f/1.8 · 1/1000 · ISO 100" aria-label="Open concept frame 02" aria-describedby="frame-02-detail"><span class="im"></span><span class="num">02</span><span class="sr-only" id="frame-02-detail">50mm, f/1.8, 1/1000, ISO 100</span></button>
+    <button class="frame" style="--media:url('/media/playground-landscape.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-landscape.webp" data-alt="A still lake and mountain silhouettes at first light" data-n="03" data-ex="24mm · f/8.0 · 1/125 · ISO 400" aria-label="Open concept frame 03" aria-describedby="frame-03-detail"><span class="im"></span><span class="num">03</span><span class="sr-only" id="frame-03-detail">24mm, f/8.0, 1/125, ISO 400</span></button>
+    <button class="frame" style="--media:url('/media/playground-portrait.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-portrait.webp" data-alt="A cinematic portrait shaped by saturated light and shadow" data-n="04" data-ex="85mm · f/1.4 · 1/2000 · ISO 100" aria-label="Open concept frame 04" aria-describedby="frame-04-detail"><span class="im"></span><span class="num">04</span><span class="sr-only" id="frame-04-detail">85mm, f/1.4, 1/2000, ISO 100</span></button>
+    <button class="frame" style="--media:url('/media/playground-travel.webp')" data-cur="LOUPE" data-kind="image" data-src="/media/playground-travel.webp" data-alt="A solitary figure facing a calm lake at dawn" data-n="05" data-ex="35mm · f/5.6 · 1/60 · ISO 800" aria-label="Open concept frame 05" aria-describedby="frame-05-detail"><span class="im"></span><span class="num">05</span><span class="sr-only" id="frame-05-detail">35mm, f/5.6, 1/60, ISO 800</span></button>
   </div>
-  <div id="exif" class="rv" role="status" aria-live="polite"><span>Hover a frame</span></div>
+  <div id="exif" class="rv"><span>Hover a frame</span></div>
   <p class="sheethint">5 licensed concept frames · final personal roll will replace them</p>
   <p class="sheetnote rv">This never started as a career. It started as a camera and somewhere to point it. I still shoot most weekends — mostly water, mostly early, mostly no one around.</p>
 </section>
 
-<section id="say" data-mk="SAY HI">
-  <div class="slug mono"><span class="tc">03:14</span><span class="lbl">Say hi</span><span class="rule"></span><span class="rt">End of reel</span></div>
+<section id="say" data-mk="SAY HI" aria-labelledby="say-heading">
+  <h2 class="slug mono" id="say-heading"><span class="tc">03:14</span><span class="lbl">Say hi</span><span class="rule"></span><span class="rt">End of reel</span></h2>
   <p><a class="big" id="mail" href="mailto:yashkanttiwary@gmail.com">yashkanttiwary@gmail.com</a><button class="copybtn" id="copymail">Copy</button></p>
   <p style="margin-top:13px"><a class="big" href="tel:+918383069094">+91 83830 69094</a></p>
 
@@ -669,10 +672,10 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   <div class="actions">
     <a class="btn primary" id="deck" href="/yash-kant-tiwary-resume.pdf" download="Yash-Kant-Tiwary-Resume.pdf">
       <span class="ic" aria-hidden="true">↓</span>
-      <span><b>Download résumé</b><em>PDF · one page · 53KB</em></span>
+      <span><b>Download résumé</b><span class="btnmeta">PDF · one page · 53KB</span></span>
     </a>
-    <a class="btn" href="https://in.linkedin.com/in/yashkanttiwary" target="_blank" rel="noopener noreferrer"><span class="ic" aria-hidden="true">in</span><span><b>LinkedIn</b><em>Profile and featured work</em></span></a>
-    <a class="btn" href="https://github.com/yashkanttiwary/yash-kant-tiwary-portfolio/blob/main/MEDIA-CREDITS.md" target="_blank" rel="noopener noreferrer"><span class="ic" aria-hidden="true">©</span><span><b>Media credits</b><em>Concept sources and licences</em></span></a>
+    <a class="btn" href="https://in.linkedin.com/in/yashkanttiwary" target="_blank" rel="noopener noreferrer"><span class="ic" aria-hidden="true">in</span><span><b>LinkedIn</b><span class="btnmeta">Profile and featured work</span></span></a>
+    <a class="btn" href="https://github.com/yashkanttiwary/yash-kant-tiwary-portfolio/blob/main/MEDIA-CREDITS.md" target="_blank" rel="noopener noreferrer"><span class="ic" aria-hidden="true">©</span><span><b>Media credits</b><span class="btnmeta">Concept sources and licences</span></span></a>
   </div>
   <p class="decknote">The résumé is ready to attach if you're forwarding this to someone.</p>
   <footer><span>Yash Kant Tiwary, Bangalore</span><span id="foothint">Bangalore · India</span></footer>
@@ -750,14 +753,18 @@ function say(m){ toast.textContent=m; toast.classList.add('on');
 
 /* ---------- clapper (H4) — skipped on mobile, reduced motion, or ?skip ---------- */
 var slate=$('#slate');
+var slatePeers=$$('body > *').filter(function(el){return el!==slate&&el.tagName!=='SCRIPT';});
+function setSlateBackground(on){ slatePeers.forEach(function(el){el.inert=on;}); }
 function roll(){ if(!slate||slate.classList.contains('gone'))return;
   slate.classList.add('snap'); setTimeout(function(){
     slate.classList.add('gone'); slate.setAttribute('aria-hidden','true'); slate.setAttribute('tabindex','-1');
+    setSlateBackground(false);
   },220); }
 if(reduce||small||/[?&]skip/.test(location.search)){
   slate.classList.add('gone'); slate.setAttribute('aria-hidden','true'); slate.setAttribute('tabindex','-1');
 }
 else{
+  setSlateBackground(true); slate.focus();
   setTimeout(roll,900);
   slate.addEventListener('click',roll);
   d.addEventListener('keydown',function h(){roll(); d.removeEventListener('keydown',h);},{once:false});
@@ -806,7 +813,7 @@ var wave=$('#wave'), BARS=small?90:180, bars=[], lastCut=-1;
 (function(){
   var frag=d.createDocumentFragment();
   for(var i=0;i<BARS;i++){
-    var b=d.createElement('i');
+    var b=d.createElement('span');
     var n=Math.sin(i*.31)*.32+Math.sin(i*.09)*.3+Math.sin(i*1.7)*.14+.5;
     n=clamp(n+(i%7===0?.18:0),.14,1);
     b.style.height=(n*100).toFixed(1)+'%';
@@ -976,7 +983,7 @@ function jumpMarker(dir){
 
 /* ---------- filmstrip hover-scrub ---------- */
 $$('.thumb').forEach(function(th){
-  var cells=$$('.strip i',th), ph=$('.ph',th), out=$('.tcout',th), base=th.dataset.tc, lastIdx=-1;
+  var cells=$$('.strip span',th), ph=$('.ph',th), out=$('.tcout',th), base=th.dataset.tc, lastIdx=-1;
   th.addEventListener('mousemove',function(e){
     var r=th.getBoundingClientRect(), p=clamp((e.clientX-r.left)/r.width,0,.999);
     var idx=Math.floor(p*cells.length);
