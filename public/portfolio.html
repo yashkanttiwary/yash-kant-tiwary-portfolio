@@ -364,12 +364,14 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
 /* hero links become real controls, not underlined text */
 .hlinks{gap:10px}
-.hlinks a{position:relative;border:1px solid var(--rule);background:var(--surface);
-  padding:12px 16px 12px 30px;transition:background .18s,border-color .18s,color .18s}
-.hlinks a::before{content:"";position:absolute;left:13px;top:50%;width:7px;height:7px;margin-top:-3.5px;
-  background:var(--mark);transition:width .18s,left .18s}
+.hlinks a{display:inline-flex;align-items:center;gap:11px;position:relative;border:1px solid var(--rule);background:var(--surface);
+  padding:12px 16px;transition:background .18s,border-color .18s,color .18s}
+.hlinks .hic{display:grid;width:17px;height:17px;place-items:center;color:var(--mark);flex:none;
+  transition:transform .18s,color .18s}
+.hlinks .hic svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:square;stroke-linejoin:miter}
 .hlinks a:hover,.hlinks a:focus-visible{background:var(--surface2);border-color:var(--mark);color:var(--ink)}
-.hlinks a:hover::before,.hlinks a:focus-visible::before{width:13px;left:10px}
+.hlinks a:hover .hic,.hlinks a:focus-visible .hic{transform:translateX(2px);color:var(--ink)}
 
 /* media surfaces say what they do, at rest — not only on hover */
 .thumb::after{content:attr(data-cur) " \25B8";position:absolute;top:22px;right:9px;z-index:3;
@@ -472,7 +474,11 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 <section id="top" data-mk="REEL">
   <h1>Yash Kant<span class="l2">Tiwary</span></h1>
   <p class="hline">Creative producer. Video at volume. Bangalore.</p>
-  <div class="hlinks"><a href="#work">The work</a><a href="#system">How it's made</a><a href="#say">Say hi</a></div>
+  <div class="hlinks">
+    <a href="#work"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12"></rect><path d="M2.5 8h15M6 4v4m4-4v4m4-4v4"></path></svg></span><span>The work</span></a>
+    <a href="#system"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="4" cy="10" r="2"></circle><circle cx="16" cy="5" r="2"></circle><circle cx="16" cy="15" r="2"></circle><path d="M6 10h3c2.5 0 2.5-5 5-5M9 10c2.5 0 2.5 5 5 5"></path></svg></span><span>How it's made</span></a>
+    <a href="#say"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 3.5h14v10H9l-4.5 3v-3H3z"></path><path d="M6.5 8.5h7"></path></svg></span><span>Say hi</span></a>
+  </div>
 
   <button class="monitor rv" id="monitor" data-cur="PLAY REEL" data-kind="video" data-src="/media/hero-loop.mp4" data-poster="/media/hero-poster.jpg" data-alt="A filmmaker setting up a camera in a color-lit studio" aria-label="Play concept showreel">
     <span class="safe" aria-hidden="true"></span>
