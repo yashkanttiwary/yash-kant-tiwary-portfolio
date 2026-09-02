@@ -1,0 +1,45 @@
+{
+  "name": "yash-kant-tiwary-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0 && npm run typecheck",
+    "validate": "node scripts/validate-content.mjs",
+    "test:browser": "playwright test",
+    "test:functional": "playwright test portfolio.spec.ts performance.spec.ts",
+    "test:visual": "playwright test visual.spec.ts --project=chromium",
+    "test": "npm run validate && npm run lint && npm run build && npm run test:browser"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "@vercel/analytics": "2.0.1",
+    "@vercel/speed-insights": "2.0.0",
+    "next": "15.x",
+    "react": "19.x",
+    "react-dom": "19.x"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "9.35.0",
+    "eslint-config-next": "15.5.25",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "^8.5.23",
+    "sharp": "^0.35.4"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env*.local
+.vercel
+.DS_Store
+npm-debug.log*
+*.tsbuildinfo
+output/playwright/
+playwright-report/
+.lighthouseci/
