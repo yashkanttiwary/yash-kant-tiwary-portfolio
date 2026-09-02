@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   outputFileTracingRoot: process.cwd(),
+  async rewrites() {
+    return {
+      beforeFiles: [{ source: "/", destination: "/portfolio.html" }],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },

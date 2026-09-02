@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getSiteUrl } from "@/lib/site-url";
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/newsreader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,15 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        {process.env.VERCEL === "1" ? (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        ) : null}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

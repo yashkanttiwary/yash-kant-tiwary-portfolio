@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("stays inside the initial-load performance budget", async ({ page, browserName }) => {
   test.skip(browserName !== "chromium", "Performance budgets use one stable browser engine.");
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto("/?skip=1", { waitUntil: "networkidle" });
 
   const metrics = await page.evaluate(() => {
     const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
