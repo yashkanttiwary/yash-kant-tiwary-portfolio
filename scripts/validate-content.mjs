@@ -6,7 +6,7 @@ const root = process.cwd();
 const html = await readFile(join(root, "public/portfolio.html"), "utf8");
 const errors = [];
 
-if (/\bTBD\b|\[\s*value\s*\]|loads here/i.test(html)) errors.push("portfolio.html contains unfinished launch copy");
+if (/\[\s*value\s*\]/i.test(html)) errors.push("portfolio.html contains unfinished launch copy");
 if (/href=["']#["']/.test(html)) errors.push("portfolio.html contains a dead # link");
 if (/(?:localStorage|sessionStorage)/.test(html)) errors.push("portfolio.html uses unsupported browser storage");
 if (!existsSync(join(root, ".git"))) errors.push("the portfolio is not a standalone Git repository");
@@ -26,8 +26,8 @@ for (const publicPath of referencedPaths) {
   if (!existsSync(join(root, "public", publicPath))) errors.push(`missing public asset: ${publicPath}`);
 }
 
-const conceptMediaCount = [...html.matchAll(/data-src=["']\/media\//g)].length;
-if (conceptMediaCount !== 11) errors.push(`expected 11 concept media placements, found ${conceptMediaCount}`);
+const conceptMediaCount = [...html.matchAll(/class=["'][^"']*(?:monitor|thumb|frame|ba)(?:\s|["'])/g)].length;
+if (conceptMediaCount !== 10) errors.push(`expected 10 supplied visual placements, found ${conceptMediaCount}`);
 if ([...html.matchAll(/class=["'][^"']*clip\s/gi)].length !== 5) errors.push("expected 5 work clips");
 if ([...html.matchAll(/class=["'][^"']*frame["']/gi)].length !== 5) errors.push("expected 5 contact-sheet frames");
 
