@@ -129,7 +129,7 @@ body.cursor-on #cur{display:block}
 
 main{margin-left:var(--rail);padding-bottom:calc(var(--bar) + 28px)}
 section{position:relative;padding:0 var(--pad) 44px;scroll-margin-top:18px}
-.slug{display:flex;align-items:baseline;gap:13px;border-top:1px solid var(--rule);padding-top:13px;margin-bottom:10px}
+.slug{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 13px;border-top:1px solid var(--rule);padding-top:13px;margin-bottom:10px}
 .slug .tc{color:var(--mark);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:var(--tracknum)}
 h2{font-size:13px;font-weight:500;letter-spacing:var(--track);color:var(--ink)}
 .slug .rule{flex:1;height:1px;background:var(--rule)}
@@ -519,7 +519,7 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding:14px 0;font-size
   .lane{grid-template-columns:1fr;gap:5px}
   .stagelist{grid-template-columns:1fr}
   .sheet{display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x mandatory;padding-bottom:6px;
-    -webkit-overflow-scrolling:touch;mask-image:linear-gradient(to right,#000 88%,transparent)}
+    -webkit-overflow-scrolling:touch;mask-image:linear-gradient(to right,#000 88%,transparent);-webkit-mask-image:linear-gradient(to right,#000 88%,transparent)}
   .sheet .frame{flex:0 0 46%;scroll-snap-align:start}
   #tp{grid-template-columns:auto 1fr;gap:10px;padding:0 12px}
   .tright{display:none}
@@ -532,6 +532,61 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding:14px 0;font-size
   .rv{opacity:1;transform:none;transition:none}
   .recdot i{animation:none}
   #slate{display:none}
+}
+
+/* ===== PHONE HARDENING ===== */
+@media(max-width:640px){
+  /* touch targets: nothing under 44px */
+  .markbtn,.copybtn,.batoggle button,#views button,.choice button,.predict button,.router button{
+    min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  .copybtn{margin-left:0;margin-top:10px}
+  .tbtns button{width:40px;height:40px}
+  .hlinks a{min-height:46px;display:flex;align-items:center;width:100%}
+  .frame,.thumb,.monitor{min-height:44px}
+
+  /* the play-reel chip collides with the monitor's bottom meta at this width */
+  .monitor::after{display:none}
+  .monitor .play{width:44px;height:44px}
+  .monbtm span:nth-child(2){display:none}
+  .recdot{left:16px}.montc{right:16px}.monbtm{left:16px;right:16px}
+
+  /* bars stack so the track never gets squeezed to nothing */
+  .bar{grid-template-columns:1fr auto;gap:6px 12px}
+  .bar .track{grid-column:1 / -1;order:2}
+  .bar .n{order:1;justify-self:end}
+
+  /* the loot card reads as two lines, not a squeezed table */
+  .card dl{grid-template-columns:1fr;gap:2px}
+  .card dt{color:var(--chrome);margin-top:10px}
+  .card dt:first-of-type{margin-top:0}
+
+  /* transport fits 320px */
+  #tp{gap:8px}
+  .tcbig{font-size:11.5px;padding:5px 7px}
+  #track{min-width:90px}
+
+  /* toast clears the view toggles */
+  #toast{bottom:calc(var(--bar) + 112px)}
+  #views{gap:8px}
+
+  /* mobile strip carries the flag count the sidebar used to show */
+  #mstrip .pos#mflags{color:var(--mark)}
+  #mstrip .pos#mflags:empty{display:none}
+
+  .ba .pane{padding:12px;font-size:11px}
+  .router .opts button,.predict .opts button,.choice .opts button{width:100%;text-align:left}
+  svg,img,video{max-width:100%}
+}
+@media(max-width:420px){
+  /* the timecode is already on the monitor and the strip — give the scrubber the room */
+  .tcbig{display:none}
+  #track{min-width:140px}
+}
+@media(max-width:480px){
+  .ruler{grid-template-columns:repeat(2,1fr)}
+  .kbox dl{grid-template-columns:74px 1fr}
+  .card{padding:18px}
+  h1{letter-spacing:-.035em}
 }
 /* MOB-05 — print */
 @media print{
@@ -926,7 +981,7 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding:14px 0;font-size
 <div id="mstrip" aria-hidden="true">
   <span class="dots" id="mdots"></span>
   <span class="lbl" id="mlabel">The reel</span>
-  <span class="pos" id="mpos">1/7</span>
+  <span class="pos" id="mflags"></span><span class="pos" id="mpos">1/7</span>
 </div>
 
 <div id="tp" role="group" aria-label="Playback controls">
@@ -1499,6 +1554,8 @@ function refreshMarks(){
   }
   if(workrt) workrt.textContent = m.length ? ('5 clips · '+m.length+' flagged') : '5 clips';
   if(tflags) tflags.textContent = m.length ? (m.length+' clip'+(m.length>1?'s':'')+' flagged') : 'No clips flagged';
+  var mf=d.getElementById('mflags');
+  if(mf) mf.textContent = m.length ? (m.length+' flagged') : '';
   if(mail){
     var base='mailto:yashkanttiwary@gmail.com';
     if(m.length){

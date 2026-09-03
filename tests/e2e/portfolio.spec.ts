@@ -61,6 +61,10 @@ test("does not overflow at supported viewport boundaries", async ({ page }) => {
     const size = await page.locator("html").evaluate((el) => ({ client: el.clientWidth, scroll: el.scrollWidth }));
     expect(size.scroll, `horizontal overflow at ${width}px`).toBe(size.client);
   }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator("#mstrip")).toBeVisible();
+  await expect(page.locator(".rail")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Play forward" })).toBeVisible();
 });
 
 test("has no automatically detectable WCAG A or AA violations", async ({ page }) => {
