@@ -60,15 +60,19 @@ body.cursor-on{cursor:none}
 #cur{position:fixed;left:0;top:0;z-index:300;pointer-events:none;transform:translate(-50%,-50%);
   transition:opacity .2s;display:none}
 body.cursor-on #cur{display:block}
-#cur .ring{width:26px;height:26px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;
+#cur .ring{width:15px;height:15px;position:relative;display:grid;place-items:center;
   transition:width .18s,height .18s,border-color .18s,border-radius .18s,background .18s}
-#cur .ring::after{content:"";width:2px;height:2px;background:var(--ink);border-radius:50%}
+#cur .ring::before,#cur .ring::after{content:"";position:absolute;background:var(--ink)}
+#cur .ring::before{width:15px;height:1px;left:0;top:7px}
+#cur .ring::after{width:1px;height:15px;left:7px;top:0}
 #cur .tag{position:absolute;left:22px;top:12px;white-space:nowrap;font-family:'Archivo',system-ui,sans-serif;
   font-size:var(--xs);letter-spacing:.025em;color:var(--mark);opacity:0;transition:opacity .18s}
-#cur.hot .ring{width:52px;height:52px;border-color:var(--mark)}
+#cur.hot .ring{width:52px;height:52px;border:1px solid var(--mark);border-radius:50%}
+#cur.hot .ring::before{display:none}
+#cur.hot .ring::after{width:2px;height:2px;left:24px;top:24px;border-radius:50%}
 #cur.hot .tag{opacity:1}
 #cur.scrub .ring{width:44px;height:20px;border-radius:2px;border-color:var(--mark);background:rgba(255,106,43,.08)}
-#cur.text .ring{width:2px;height:24px;border-radius:0;background:var(--ink);border-color:transparent}
+#cur.text .ring{width:15px;height:15px}
 
 /* ===== CLAPPER (H4) ===== */
 #slate{position:fixed;inset:0;z-index:400;background:#0A0C0B;display:grid;place-items:center;
@@ -100,10 +104,12 @@ body.cursor-on #cur{display:block}
 main{margin-left:var(--rail);padding-bottom:calc(var(--bar) + 28px)}
 section{position:relative;padding:0 var(--pad) 52px;scroll-margin-top:18px}
 #system{padding-top:14px}
-.slug{display:flex;align-items:baseline;gap:13px;border-top:1px solid var(--rule);padding-top:13px;margin-bottom:34px;
+.slug{display:grid;grid-template-columns:auto auto minmax(24px,1fr) auto;align-items:center;gap:16px;
+  border-top:1px solid var(--rule);padding-top:18px;margin-bottom:34px;
   font-size:inherit;font-weight:400;line-height:inherit}
 .slug .tc{color:var(--mark);font-size:10.5px;letter-spacing:.08em}
-.slug .lbl{color:var(--ink);font-family:'Archivo',system-ui,sans-serif;font-size:10.5px;letter-spacing:.03em}
+.slug .lbl{color:var(--ink);font-family:'Archivo',system-ui,sans-serif;
+  font-size:clamp(1.55rem,3.2vw,2.65rem);font-weight:650;line-height:1;letter-spacing:-.025em}
 .slug .rule{flex:1;height:1px;background:var(--rule)}
 .slug .rt{color:var(--chrome);font-family:'Archivo',system-ui,sans-serif;font-size:var(--xs);letter-spacing:.03em}
 
@@ -129,8 +135,8 @@ h1 .l2{display:block;color:var(--dim)}
 .brk.bl{bottom:9px;left:9px;border-right:0;border-top:0}.brk.br{bottom:9px;right:9px;border-left:0;border-top:0}
 .recdot{position:absolute;top:12px;left:32px;display:flex;align-items:center;gap:7px;
   font-family:'JetBrains Mono',monospace;font-size:var(--xs);letter-spacing:.14em;color:var(--chrome)}
-.recdot .rec-led{width:6px;height:6px;border-radius:50%;background:var(--rec);animation:blink 1.6s infinite}
-@keyframes blink{0%,45%{opacity:1}55%,100%{opacity:.2}}
+.recdot .rec-led{width:6px;height:6px;border-radius:50%;background:var(--rec);animation:blink .72s ease-in-out 3}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .montc{position:absolute;top:12px;right:32px;font-family:'JetBrains Mono',monospace;font-size:var(--xs);
   letter-spacing:.14em;color:var(--chrome)}
 .monbtm{position:absolute;bottom:12px;left:32px;right:32px;display:flex;justify-content:space-between;gap:10px;
@@ -411,6 +417,30 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   letter-spacing:.025em;text-transform:none}
 .decknote{margin-top:14px;font-size:.92rem;color:var(--dim);max-width:44ch}
 
+/* ===== VIEW CONTROLS — monitor controls, not an accessibility add-on ===== */
+.viewtools{position:fixed;top:14px;right:16px;z-index:70;display:flex;border:1px solid var(--rule);
+  background:rgba(12,15,13,.88);backdrop-filter:blur(10px)}
+.viewtools button{display:flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:0;
+  border-left:1px solid var(--rule);background:transparent;color:var(--chrome);font-family:'Archivo',system-ui,sans-serif;
+  font-size:10px;letter-spacing:.025em;cursor:pointer}
+.viewtools button:first-child{border-left:0}
+.viewtools button:hover,.viewtools button[aria-pressed="true"]{color:var(--ink);background:var(--surface2)}
+.viewtools button[aria-pressed="true"]{box-shadow:inset 0 -2px var(--mark)}
+.viewtools .viewmark{width:8px;height:8px;border:1px solid currentColor;display:inline-block}
+.viewtools #calmtoggle .viewmark{border-radius:50%}
+.viewtools #readtoggle .viewmark{width:auto;height:auto;border:0;color:var(--mark);font-weight:700}
+
+body.calm-mode{--chrome:#7F887F;--dim:#7E867E;--rule:#2D332F}
+body.calm-mode.cursor-on,body.calm-mode.cursor-on :not(input):not(textarea){cursor:auto}
+body.calm-mode #cur{display:none!important}
+body.calm-mode .recdot .rec-led{animation:none}
+body.calm-mode .rv{transition:none}
+body.reading-mode{font-size:18px;line-height:1.62}
+body.reading-mode .lane .t,body.reading-mode .sysbody,body.reading-mode .sheetnote,
+body.reading-mode .rulerline{line-height:1.72}
+body.reading-mode .hline,body.reading-mode .syscopy,body.reading-mode .sheetnote,
+body.reading-mode .rulerline{max-width:48ch}
+
 @media(max-width:640px){ .actions{flex-direction:column} .btn{width:100%} .hlinks a{flex:1 0 auto} }
 
 @media(max-width:900px){
@@ -433,6 +463,11 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
   .tright{display:none}
   .tcbig{font-size:11px;padding:4px 7px}
   .mk b{display:none}
+  .slug{grid-template-columns:auto 1fr auto;gap:10px}
+  .slug .rule{display:none}
+  .slug .lbl{font-size:clamp(1.4rem,8vw,2rem)}
+  .viewtools{top:8px;right:8px}
+  .viewtools button{padding:0 9px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -446,6 +481,10 @@ footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-fami
 
 <a class="skiplink" href="#main">Skip to content</a>
 <div id="cur" aria-hidden="true"><div class="ring"></div><div class="tag mono"></div></div>
+<div class="viewtools" role="group" aria-label="View controls">
+  <button id="calmtoggle" type="button" aria-pressed="false"><span class="viewmark" aria-hidden="true"></span>Calm</button>
+  <button id="readtoggle" type="button" aria-pressed="false"><span class="viewmark" aria-hidden="true">Aa</span>Reading</button>
+</div>
 
 <div id="slate" role="button" tabindex="0" aria-label="Start Yash Kant Tiwary's portfolio reel">
   <div>
@@ -747,6 +786,22 @@ var reduce=w.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var small=w.matchMedia('(max-width:640px)').matches;
 d.body.classList.remove('nojs');
 
+/* ---------- view modes — visit-scoped by design, no browser storage ---------- */
+var calm=false;
+var calmToggle=$('#calmtoggle'), readToggle=$('#readtoggle');
+function setMode(button,className,on){
+  d.body.classList.toggle(className,on);
+  button.setAttribute('aria-pressed',on?'true':'false');
+}
+calmToggle.addEventListener('click',function(){
+  calm=!calm; setMode(calmToggle,'calm-mode',calm);
+  if(!calm){ lastP=-1; requestPaint(); }
+});
+readToggle.addEventListener('click',function(){
+  setMode(readToggle,'reading-mode',!d.body.classList.contains('reading-mode'));
+  recalcTotal(); placeMarkers(); lastP=-1; if(!calm) requestPaint();
+});
+
 function p2(n){return (n<10?'0':'')+n;}
 function clamp(v,a,b){return v<a?a:v>b?b:v;}
 
@@ -777,7 +832,9 @@ else{
 /* ---------- cursor (H6) — engages only after a real pointer moves ---------- */
 var cur=$('#cur'), curTag=$('.tag',cur), cx=0,cy=0,tx=0,ty=0,curOn=false,curRaf=null;
 function curLoop(){
-  cx+=(tx-cx)*.22; cy+=(ty-cy)*.22;
+  var eased=cur.classList.contains('hot')||cur.classList.contains('scrub');
+  if(eased){ cx+=(tx-cx)*.22; cy+=(ty-cy)*.22; }
+  else{ cx=tx; cy=ty; }
   cur.style.transform='translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px) translate(-50%,-50%)';
   if(Math.abs(tx-cx)>.4||Math.abs(ty-cy)>.4) curRaf=requestAnimationFrame(curLoop);
   else curRaf=null;                                   /* L2 — idle instead of spinning */
@@ -836,7 +893,7 @@ function tcStr(s){ var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.floor
   return p2(h)+':'+p2(m)+':'+p2(x)+':'+p2(f); }
 
 /* H1 — one rAF-throttled paint, only touches bars that changed */
-var pendingPaint=false, lastP=-1;
+var pendingPaint=false, lastP=-1, transportHot=false;
 function paint(){
   pendingPaint=false;
   var p=clamp(scrollY/maxS(),0,1);
@@ -857,7 +914,11 @@ function paint(){
   }
 }
 function requestPaint(){ if(!pendingPaint){ pendingPaint=true; requestAnimationFrame(paint); } }
-w.addEventListener('scroll',requestPaint,{passive:true});
+w.addEventListener('scroll',function(){
+  if(!calm && (transportHot||dragging||speed!==0)) requestPaint();
+},{passive:true});
+$('#tp').addEventListener('pointerenter',function(){ transportHot=true; if(!calm) requestPaint(); });
+$('#tp').addEventListener('pointerleave',function(){ transportHot=false; });
 
 /* ---------- markers (L4 — built once, positions updated) ---------- */
 var markerEls=[];
@@ -1116,7 +1177,7 @@ $('#sheetgrid').addEventListener('mouseleave',function(){
 /* ---------- modals with focus trap (H5) ---------- */
 var lastFocus=null, openModalEl=null, bodyOverflow='';
 var FOCUSABLE='a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
-var modalPeers=[$('.rail'),$('#main'),$('#tp'),$('#slate')].filter(Boolean);
+var modalPeers=[$('.rail'),$('#main'),$('#tp'),$('#slate'),$('.viewtools')].filter(Boolean);
 function setModalBackground(on){
   modalPeers.forEach(function(el){
     el.inert=on;
