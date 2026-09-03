@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Yash Kant Tiwary",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Yash Kant Tiwary — Creative producer. Bangalore." }],
+    images: [{ url: "/og-loot.png", width: 1200, height: 630, alt: "Yash Kant Tiwary — creative producer. The Signal Loop ships 100+ videos a month." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Yash Kant Tiwary — Creative producer",
     description: "Video, campaigns and content systems. Bangalore.",
-    images: ["/og.png"],
+    images: ["/og-loot.png"],
   },
 };
 

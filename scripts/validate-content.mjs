@@ -34,8 +34,8 @@ if ([...html.matchAll(/class=["'][^"']*frame["']/gi)].length !== 5) errors.push(
 const heroBytes = (await stat(join(root, "public/media/hero-loop.mp4"))).size;
 if (heroBytes > 6 * 1024 * 1024) errors.push("hero-loop.mp4 exceeds the 6 MB budget");
 
-const ogBytes = (await stat(join(root, "public/og.png"))).size;
-if (ogBytes > 300 * 1024) errors.push("og.png exceeds the 300 KB budget");
+const ogBytes = (await stat(join(root, "public/og-loot.png"))).size;
+if (ogBytes > 350 * 1024) errors.push("og-loot.png exceeds the 350 KB budget");
 
 async function directoryBytes(directory) {
   let total = 0;

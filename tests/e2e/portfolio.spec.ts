@@ -26,7 +26,7 @@ test("renders the complete editing-suite portfolio and production metadata", asy
   await expect(page.locator("#wave span")).toHaveCount(180);
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
   await expect(page.getByText("TBD", { exact: true })).toHaveCount(0);
-  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /\/og\.png$/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /\/og-loot\.png$/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https:\/\//);
 
   const resume = await request.get("/yash-kant-tiwary-resume.pdf");
@@ -93,22 +93,24 @@ test("does not overflow at supported viewport boundaries", async ({ page }) => {
   }
 });
 
-test("marks clips, preserves marks in the URL, and builds a useful email", async ({ page }) => {
+test("flags clips, preserves flags in the URL, and builds a useful email", async ({ page }) => {
   await page.goto("/?skip=1#work");
   const firstClip = page.locator(".clip").first();
-  const mark = firstClip.getByRole("button", { name: "Mark" });
+  const mark = firstClip.getByRole("button", { name: "Flag for the email" });
   await mark.click();
 
   await expect(mark).toHaveAttribute("aria-pressed", "true");
-  await expect(mark).toHaveText("Marked");
+  await expect(mark).toHaveText("Flagged");
   await expect(page).toHaveURL(/#marks=0$/);
   await expect(page.locator("#marked")).toHaveClass(/on/);
   await expect(page.locator("#marklist")).toContainText("PW IOI MBA launch");
   await expect(page.locator("#mail")).toHaveAttribute("href", /subject=.*portfolio/i);
+  await expect(page.locator("#tpmail")).toHaveAttribute("href", /100%2B%20videos/i);
+  await expect(page.locator("#transportmarkcount")).toHaveText("1");
 
   await page.reload();
-  await expect(firstClip.getByRole("button", { name: "Marked" })).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "Clear marks" }).click();
+  await expect(firstClip.getByRole("button", { name: "Flagged" })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Clear flags" }).click();
   await expect(page.locator("#marked")).not.toHaveClass(/on/);
 });
 
@@ -174,6 +176,35 @@ test("makes the timeline operable by keyboard", async ({ page }) => {
   await timeline.press("ArrowRight");
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   await expect.poll(() => timeline.getAttribute("aria-valuenow").then(Number)).toBeGreaterThan(0);
+});
+
+test("keeps the reel details alive by default and lets Calm freeze them", async ({ page }) => {
+  await page.goto("/?skip=1");
+  const rec = page.locator(".rec-led");
+  await expect(rec).toHaveCSS("animation-name", "blink");
+  await expect(rec).toHaveCSS("animation-iteration-count", "infinite");
+
+  const timecode = page.locator("#tcbig");
+  const before = await timecode.textContent();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight / 2));
+  await expect.poll(() => timecode.textContent()).not.toBe(before);
+
+  await page.getByRole("button", { name: "Calm" }).click();
+  await expect(rec).toHaveCSS("animation-name", "none");
+  const frozen = await timecode.textContent();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.waitForTimeout(100);
+  expect(await timecode.textContent()).toBe(frozen);
+});
+
+test("keeps orientation and real playback controls on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?skip=1");
+  await expect(page.getByRole("navigation", { name: "Mobile section progress" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play backward" })).toBeHidden();
+  await expect(page.getByRole("button", { name: "Stop" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play forward" })).toBeVisible();
+  await expect(page.locator(".sheetaid")).toBeVisible();
 });
 
 test("honors reduced motion without hiding content", async ({ page }) => {
