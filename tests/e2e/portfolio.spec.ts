@@ -9,6 +9,7 @@ test("renders the supplied portfolio composition", async ({ page, request }) => 
   await expect(page.locator(".clip")).toHaveCount(5);
   await expect(page.locator(".frame")).toHaveCount(5);
   await expect(page.getByText("The Return Loop", { exact: false }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Behance/ })).toHaveAttribute("href", "https://www.behance.net/yashkanttiwary");
   expect((await request.get("/yash-kant-tiwary-resume.pdf")).ok()).toBeTruthy();
 });
 
