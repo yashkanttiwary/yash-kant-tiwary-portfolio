@@ -138,6 +138,18 @@ h1 .l2{display:block;color:var(--dim)}
 .hlinks a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:3px}
 .hlinks a:hover{border-bottom-color:var(--mark);color:var(--mark)}
 
+/* ===== EXPERIENCE ROUTER ===== */
+.entrychoice{margin-top:24px;border:1px solid var(--rule);background:rgba(18,21,19,.82);display:grid;
+  grid-template-columns:minmax(180px,.72fr) repeat(2,minmax(180px,1fr));align-items:stretch}
+.entryprompt{padding:15px 17px;color:var(--body);font-size:.92rem;display:flex;align-items:center}
+.routebtn,.choicebtn{appearance:none;border:0;border-left:1px solid var(--rule);background:transparent;color:var(--ink);
+  padding:14px 16px;text-align:left;font:inherit;cursor:pointer;transition:background .18s,border-color .18s}
+.routebtn span{display:block;color:var(--mark);font-size:var(--xs);letter-spacing:.03em;margin-bottom:3px}
+.routebtn b{font-weight:550;font-size:1rem}
+.routebtn:hover,.routebtn:focus-visible,.routebtn.on,.choicebtn:hover,.choicebtn:focus-visible,.choicebtn.on{
+  background:rgba(255,106,43,.11);box-shadow:inset 0 -2px var(--mark)}
+.routebtn.on::after{content:"Selected \2192";display:block;color:var(--chrome);font-size:var(--xs);margin-top:5px}
+
 .monitor{position:relative;margin-top:34px;background:var(--surface) url('/media/hero-poster.jpg') center/cover no-repeat;border:1px solid var(--rule);
   aspect-ratio:2.4;overflow:hidden;width:100%;display:block;padding:0;text-align:left;font-family:inherit;color:inherit}
 .monitor::before{content:"";position:absolute;inset:0;
@@ -169,6 +181,18 @@ h1 .l2{display:block;color:var(--dim)}
 .readout div:not(:first-child){padding-left:18px}
 .readout .v{font-size:clamp(1.5rem,3.3vw,2.25rem);font-weight:600;letter-spacing:-.03em}
 .readout .k{font-size:var(--xs);letter-spacing:.03em;color:var(--dim);margin-top:5px}
+.choicepoint{border:1px solid var(--rule);background:var(--surface);padding:18px;margin-bottom:18px}
+.choiceeyebrow{font-family:'JetBrains Mono',monospace;font-size:var(--xs);letter-spacing:.08em;color:var(--mark)}
+.choicequestion{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.28;margin-top:6px;max-width:38ch}
+.choiceoptions{display:flex;flex-wrap:wrap;margin-top:14px;border:1px solid var(--rule);width:max-content;max-width:100%}
+.choicebtn{border-left:1px solid var(--rule);min-width:118px;text-align:center;font-size:.9rem}
+.choicebtn:first-child{border-left:0}
+.choicefeedback{margin-top:14px;color:var(--body);font-size:.95rem;line-height:1.5;max-width:62ch}
+.choicefeedback strong{color:var(--mark);font-weight:600}
+.answerreveal[hidden]{display:none}
+.nojs .answerreveal[hidden]{display:block!important}
+.answerreveal{animation:answer-in .42s cubic-bezier(.16,1,.3,1)}
+@keyframes answer-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* ===== CLIPS ===== */
 .clip{border-top:1px solid var(--rule);padding:22px 0 30px;display:grid;gap:22px;
@@ -188,6 +212,10 @@ h1 .l2{display:block;color:var(--dim)}
   color:var(--chrome);text-transform:uppercase;background:linear-gradient(transparent,rgba(10,12,11,.85))}
 .clip:hover .thumb{border-color:var(--mark)}
 .clip.marked .thumb{border-color:var(--mark)}
+.clip.flagship{grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);padding-bottom:42px}
+.clip-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;border-top:1px solid var(--rule)}
+.clip-pair .clip{display:block;border-top:0;padding:22px 0 38px}
+.clip-pair .thumb{margin-bottom:20px}
 .clip.closing{margin-top:24px;padding:26px 20px;border:1px solid var(--mark);
   background:linear-gradient(110deg,rgba(255,106,43,.08),transparent 52%)}
 .closeflag{display:block;margin-bottom:7px;color:var(--mark);font-size:var(--xs);letter-spacing:.03em}
@@ -210,6 +238,22 @@ h1 .l2{display:block;color:var(--dim)}
 .fig:first-child b{display:block;color:var(--mark);font-size:2rem;line-height:1;font-weight:650}
 .fig:not(:first-child){border-left:1px solid var(--rule);padding-left:10px;padding-bottom:2px;max-width:16ch}
 .fig b{color:var(--mark);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500}
+.casechoice{margin:0 0 16px;border-left:2px solid var(--mark);padding:0 0 0 12px}
+.casechoice .choicequestion{font-size:.93rem;margin:0;color:var(--body)}
+.casechoice .choiceoptions{margin-top:10px}
+.casechoice .choicebtn{padding:9px 11px;min-width:0;font-size:.78rem}
+.casechoice .choicefeedback{font-size:.82rem;margin-top:10px}
+.compareveil{position:absolute;inset:13px 50% 0 0;background:var(--media) center/cover no-repeat;
+  filter:grayscale(1) contrast(.84);border-right:1px solid var(--mark);z-index:1;pointer-events:none}
+.comparelabels{position:absolute;left:9px;right:9px;top:42px;z-index:3;display:flex;justify-content:space-between;
+  color:var(--ink);font-size:var(--xs);text-shadow:0 1px 4px #000;pointer-events:none}
+.buildstat{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  border:1px solid var(--mark);background:rgba(10,12,11,.84);padding:9px 12px;color:var(--body);
+  font-family:'Archivo',system-ui,sans-serif;font-size:var(--xs);pointer-events:none;white-space:nowrap}
+.buildstat b{color:var(--mark);font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:600}
+.lootdrop{margin:16px 0 0;padding:13px 14px;border:1px dashed var(--mark);color:var(--body);font-size:.9rem}
+.lootdrop span{display:block;color:var(--mark);font-family:'JetBrains Mono',monospace;font-size:var(--xs);
+  letter-spacing:.08em;margin-bottom:4px}
 
 /* ===== CALL SHEET ===== */
 .callsheet{border:1px solid var(--rule);background:var(--surface)}
@@ -247,6 +291,13 @@ h1 .l2{display:block;color:var(--dim)}
 .bar .fill{position:absolute;inset:0 auto 0 0;background:var(--rule)}
 .bar.after .fill{background:var(--mark)}
 .bar .n{color:var(--ink);font-size:11px}
+.bar .ghost{position:absolute;top:-5px;bottom:-5px;width:1px;background:var(--ink);z-index:2}
+.bar .ghost::after{content:"Your guess";position:absolute;bottom:13px;left:4px;color:var(--chrome);font-size:8px;white-space:nowrap}
+.turnchoice{margin:24px 0 0}
+.warroom{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;margin:22px 0 0;
+  padding:15px 16px;border:1px solid var(--mark);background:linear-gradient(90deg,rgba(255,106,43,.1),transparent)}
+.warroom span{color:var(--mark);font-family:'JetBrains Mono',monospace;font-size:var(--xs);letter-spacing:.08em}
+.warroom strong{font-size:1rem;font-weight:550;line-height:1.4}
 
 /* ===== RULER ===== */
 .rulerline{font-size:clamp(1rem,1.9vw,1.2rem);color:var(--body);margin-bottom:22px;max-width:46ch}
@@ -279,6 +330,7 @@ h1 .l2{display:block;color:var(--dim)}
 #exif{margin-top:16px;display:flex;flex-wrap:wrap;gap:18px;font-family:'Archivo',system-ui,sans-serif;
   font-size:var(--xs);letter-spacing:.025em;color:var(--dim);min-height:14px}
 #exif b{color:var(--mark);font-weight:500}
+.lootsecret{color:var(--mark);border-left:1px solid var(--mark);padding-left:12px}
 .sheetnote{margin-top:24px;max-width:46ch;color:var(--body);font-size:1.02rem;line-height:1.55}
 .sheetaid{display:none;justify-content:space-between;gap:12px;margin-top:8px;color:var(--chrome);font-size:var(--xs)}
 
@@ -306,6 +358,7 @@ h1 .l2{display:block;color:var(--dim)}
 footer{border-top:1px solid var(--rule);margin-top:44px;padding:13px 0;font-family:'Archivo',system-ui,sans-serif;
   font-size:var(--xs);letter-spacing:.025em;color:var(--chrome);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.finalquestion{margin-top:28px;font-size:clamp(1.25rem,3vw,2rem);font-weight:600;letter-spacing:-.025em;color:var(--ink)}
 
 /* ===== TRANSPORT ===== */
 #tp{position:fixed;left:0;right:0;bottom:0;height:var(--bar);z-index:60;background:#0C0F0D;
@@ -486,7 +539,10 @@ body.reading-mode .rulerline{max-width:48ch}
 @media(max-width:640px){ .actions{flex-direction:column} .btn{width:100%} .hlinks a{flex:1 0 auto} }
 
 @media(max-width:900px){
-  .clip{grid-template-columns:1fr}
+  .clip,.clip.flagship{grid-template-columns:1fr}
+  .entrychoice{grid-template-columns:1fr 1fr}
+  .entryprompt{grid-column:1/-1;border-bottom:1px solid var(--rule)}
+  .routebtn:first-of-type{border-left:0}
   .stages{grid-template-columns:repeat(2,1fr)}
   .ruler{grid-template-columns:repeat(3,1fr);row-gap:14px}
 }
@@ -501,6 +557,11 @@ body.reading-mode .rulerline{max-width:48ch}
   .clip .lane .k{display:block}
   .figs{grid-template-columns:1fr 1fr}
   .fig:first-child{grid-column:1/-1}
+  .entrychoice,.clip-pair{grid-template-columns:1fr}
+  .entrychoice .routebtn{border-left:0;border-top:1px solid var(--rule)}
+  .choiceoptions{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}
+  .choicebtn{min-width:0;padding:10px 7px;font-size:.78rem}
+  .warroom{grid-template-columns:1fr;gap:5px}
   /* contact sheet becomes a scrollable strip — no stranded frame */
   .sheet{display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x mandatory;padding-bottom:6px;
     -webkit-overflow-scrolling:touch;mask-image:linear-gradient(to right,transparent,#000 18px,#000 calc(100% - 18px),transparent)}
@@ -534,7 +595,7 @@ body.reading-mode .rulerline{max-width:48ch}
   html,body{background:#fff!important;color:#111!important;font-size:10.5pt;line-height:1.45}
   body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #slate,#cur,.rail,#tp,.mobrail,.viewtools,.markbtn,.copybtn,.keypeek,.trackhint,.bridge,
-  .monitor::after,.thumb::after{display:none!important}
+  .monitor::after,.thumb::after,.entrychoice,.choicepoint,.casechoice{display:none!important}
   main{margin:0;padding:0}
   section,main section:not(#top){padding:12mm 0!important;background:#fff!important;border-top:1px solid #999;break-inside:auto}
   #top{padding-top:0!important;border-top:0}
@@ -600,6 +661,11 @@ body.reading-mode .rulerline{max-width:48ch}
     <a href="#system"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="4" cy="10" r="2"></circle><circle cx="16" cy="5" r="2"></circle><circle cx="16" cy="15" r="2"></circle><path d="M6 10h3c2.5 0 2.5-5 5-5M9 10c2.5 0 2.5 5 5 5"></path></svg></span><span>How it's made</span></a>
     <a href="#say"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 3.5h14v10H9l-4.5 3v-3H3z"></path><path d="M6.5 8.5h7"></path></svg></span><span>Say hi</span></a>
   </div>
+  <div class="entrychoice rv" aria-label="Choose a portfolio route">
+    <p class="entryprompt">What do you need to see first?</p>
+    <button class="routebtn" type="button" data-route="work"><span>Craft</span><b>Show me the work</b></button>
+    <button class="routebtn" type="button" data-route="system"><span>Operations</span><b>Show me the system</b></button>
+  </div>
 
   <button class="monitor rv" id="monitor" data-cur="Play reel" data-kind="video" data-src="/media/hero-loop.mp4" data-poster="/media/hero-poster.jpg" data-alt="A filmmaker setting up a camera in a color-lit studio" aria-label="Play concept showreel">
     <span class="safe" aria-hidden="true"></span>
@@ -615,11 +681,23 @@ body.reading-mode .rulerline{max-width:48ch}
 <section id="scale" data-mk="Scale" aria-labelledby="scale-heading">
   <h2 class="slug mono" id="scale-heading"><span class="tc">00:12</span><span class="lbl">Scale</span><span class="rule"></span><span class="rt">4 figures</span></h2>
   <p class="framing flare">I use scale as the stress test: if the system bends, the craft breaks.</p>
-  <div class="readout rv">
-    <div><div class="v mono">100+</div><div class="k">Videos a month</div></div>
-    <div><div class="v mono">200–300</div><div class="k">Creatives a month</div></div>
-    <div><div class="v mono">5</div><div class="k">Person team, plus freelancers</div></div>
-    <div><div class="v mono">~50%</div><div class="k">Faster turnaround</div></div>
+  <div class="choicepoint rv" id="scalechoice">
+    <span class="choiceeyebrow">Your call · 01</span>
+    <p class="choicequestion">What can a five-person team reliably ship in one month?</p>
+    <div class="choiceoptions" role="group" aria-label="Guess monthly video output">
+      <button class="choicebtn" type="button" data-scale="25">About 25</button>
+      <button class="choicebtn" type="button" data-scale="50">About 50</button>
+      <button class="choicebtn" type="button" data-scale="100">100+</button>
+    </div>
+    <p class="choicefeedback" id="scalefeedback" aria-live="polite">Pick the number you would plan around.</p>
+  </div>
+  <div class="answerreveal" id="scaleanswer" hidden>
+    <div class="readout rv">
+      <div><div class="v mono">100+</div><div class="k">Videos a month</div></div>
+      <div><div class="v mono">200–300</div><div class="k">Creatives a month</div></div>
+      <div><div class="v mono">5</div><div class="k">Person team, plus freelancers</div></div>
+      <div><div class="v mono">~50%</div><div class="k">Faster turnaround</div></div>
+    </div>
   </div>
   <p class="bridge">The numbers hold—but only because the clips show different kinds of control.</p>
 </section>
@@ -628,8 +706,8 @@ body.reading-mode .rulerline{max-width:48ch}
   <h2 class="slug mono" id="work-heading"><span class="tc">00:28</span><span class="lbl">Clips</span><span class="rule"></span><span class="rt" id="workrt">5 clips</span></h2>
   <p class="framing">I chose these five clips because each solves a different production problem.</p>
 
-  <article class="clip rv" data-title="PW IOI MBA launch">
-    <button class="thumb" style="--media:url('/media/case-mba-launch.webp')" data-cur="Open" data-kind="image" data-src="/media/case-mba-launch.webp" data-alt="A professional camera crew filming a live event under magenta stage lights" data-file="PWIOI_MBA_LAUNCH.MP4" data-tc="00:00:28:04" aria-label="Open PW IOI MBA launch concept clip">
+  <article class="clip flagship rv" data-title="PW IOI MBA launch">
+    <button class="thumb" style="--media:url('/media/case-mba-launch.webp')" data-mode="scrub" data-cur="Scrub clip" data-kind="image" data-src="/media/case-mba-launch.webp" data-alt="A professional camera crew filming a live event under magenta stage lights" data-file="PWIOI_MBA_LAUNCH.MP4" data-tc="00:00:28:04" aria-label="Open PW IOI MBA launch concept clip">
       <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
       <span class="clipmeta"><span>PWIOI_MBA_LAUNCH.MP4</span><span class="tcout">00:00:28:04</span></span>
@@ -645,14 +723,25 @@ body.reading-mode .rulerline{max-width:48ch}
     </div>
   </article>
 
+  <div class="clip-pair">
   <article class="clip rv" data-title="Skillshala">
-    <button class="thumb" style="--media:url('/media/case-skillshala.webp')" data-cur="Open" data-kind="image" data-src="/media/case-skillshala.webp" data-alt="A film crew preparing a studio camera and production plan" data-file="SKILLSHALA_CAMPAIGN.MP4" data-tc="00:00:51:17" aria-label="Open Skillshala concept clip">
+    <button class="thumb" style="--media:url('/media/case-skillshala.webp')" data-mode="compare" data-cur="Reveal result" data-kind="image" data-src="/media/case-skillshala.webp" data-alt="A film crew preparing a studio camera and production plan" data-file="SKILLSHALA_CAMPAIGN.MP4" data-tc="00:00:51:17" aria-label="Open Skillshala concept clip">
       <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
+      <span class="compareveil" aria-hidden="true"></span><span class="comparelabels" aria-hidden="true"><span>Cold list</span><span>Room filled</span></span>
       <span class="clipmeta"><span>SKILLSHALA_CAMPAIGN.MP4</span><span class="tcout">00:00:51:17</span></span>
     </button>
     <div>
       <div class="chead"><h3>Skillshala</h3><button class="markbtn" data-mark aria-pressed="false">Flag for the email</button></div>
+      <div class="casechoice">
+        <p class="choicequestion">Three weeks, a cold list, a hard target. Where do you spend first?</p>
+        <div class="choiceoptions" role="group" aria-label="Choose a Skillshala campaign priority">
+          <button class="choicebtn" type="button" data-skill="creators">Creators</button>
+          <button class="choicebtn" type="button" data-skill="paid">Paid reach</button>
+          <button class="choicebtn" type="button" data-skill="engine">One content engine</button>
+        </div>
+        <p class="choicefeedback" id="skillfeedback" aria-live="polite">Make the call before reading the outcome.</p>
+      </div>
       <div class="lanes">
         <div class="lane"><span class="k">Challenge</span><span class="t">A hard registration target, three weeks, a cold list.</span></div>
         <div class="lane"><span class="k">Execution</span><span class="t">One engine across YouTube, Telegram and paid, running live throughout.</span></div>
@@ -678,11 +767,13 @@ body.reading-mode .rulerline{max-width:48ch}
       <div class="figs"><span class="fig"><b>1</b> visual system</span><span class="fig"><b>Theme-first</b> direction</span><span class="fig"><b>Cross-channel</b> placements</span></div>
     </div>
   </article>
+  </div>
 
   <article class="clip rv" data-title="Two channels, from zero">
-    <button class="thumb" style="--media:url('/media/case-youtube-channels.webp')" data-cur="Open" data-kind="image" data-src="/media/case-youtube-channels.webp" data-alt="A creator working at a color-grading and video-editing desk" data-file="YT_CHANNELS_CUT.MP4" data-tc="00:01:33:22" aria-label="Open Two channels concept clip">
+    <button class="thumb" style="--media:url('/media/case-youtube-channels.webp')" data-mode="build" data-cur="Build the result" data-kind="image" data-src="/media/case-youtube-channels.webp" data-alt="A creator working at a color-grading and video-editing desk" data-file="YT_CHANNELS_CUT.MP4" data-tc="00:01:33:22" aria-label="Open Two channels concept clip">
       <span class="strip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
       <span class="ph" aria-hidden="true"></span>
+      <span class="buildstat" aria-hidden="true"><b>0</b> subscribers built</span>
       <span class="clipmeta"><span>YT_CHANNELS_CUT.MP4</span><span class="tcout">00:01:33:22</span></span>
     </button>
     <div>
@@ -710,6 +801,7 @@ body.reading-mode .rulerline{max-width:48ch}
         <div class="lane"><span class="k">Result</span><span class="t">Everything out the door, every month, at one standard.</span></div>
       </div>
       <div class="figs"><span class="fig"><b>100+</b> videos a month</span><span class="fig"><b>200–300</b> creatives a month</span><span class="fig"><b>5</b> people led</span></div>
+      <p class="lootdrop"><span>Unexpected truth</span>At volume, speed is rarely the bottleneck. Unclear decisions are.</p>
     </div>
   </article>
   <p class="bridge">Five different problems leave one question: what made that consistency possible?</p>
@@ -749,12 +841,24 @@ body.reading-mode .rulerline{max-width:48ch}
       </svg>
       <div id="stageinfo" role="status" aria-live="polite"><b>Select a stage</b>Click any stage above to see what happens inside it.</div>
 
-      <div class="bars">
-        <div class="bar"><span>Before</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="n">1–1.5 days</span></div>
-        <div class="bar after"><span>After</span><span class="track"><span class="fill" data-w="34%" style="width:0"></span></span><span class="n">about half a day</span></div>
+      <div class="choicepoint turnchoice">
+        <span class="choiceeyebrow">Your call · 02</span>
+        <p class="choicequestion">After the Signal Loop, how long did one review take?</p>
+        <div class="choiceoptions" role="group" aria-label="Guess the new review turnaround">
+          <button class="choicebtn" type="button" data-turn="67">About a day</button>
+          <button class="choicebtn" type="button" data-turn="34">Half a day</button>
+        </div>
+        <p class="choicefeedback" id="turnfeedback" aria-live="polite">Choose before the real bar rolls.</p>
+      </div>
+      <div class="answerreveal" id="turnanswer" hidden>
+        <div class="bars">
+          <div class="bar"><span>Before</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="n">1–1.5 days</span></div>
+          <div class="bar after"><span>After</span><span class="track"><span class="fill" data-w="34%" style="width:0"></span><span class="ghost" id="turnghost"></span></span><span class="n">about half a day</span></div>
+        </div>
       </div>
     </div>
   </div>
+  <aside class="warroom rv"><span>Whole picture</span><strong>100+ videos only works when craft, operations, and feedback share one loop.</strong></aside>
   <p class="bridge">The Signal Loop explains the output. The timeline explains how I learned to build it.</p>
 </section>
 
@@ -783,7 +887,7 @@ body.reading-mode .rulerline{max-width:48ch}
     <button class="frame" style="--media:url('/media/playground-water.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-water.webp" data-alt="Ocean waves folding over a rocky shoreline from above" data-n="01" data-ex="35mm · f/2.0 · 1/400 · ISO 200" aria-label="Open concept frame 01" aria-describedby="frame-01-detail"><span class="im"></span><span class="num">01</span><span class="sr-only" id="frame-01-detail">35mm, f/2.0, 1/400, ISO 200</span></button>
     <button class="frame" style="--media:url('/media/playground-morning.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-morning.webp" data-alt="A quiet peach sunrise over the ocean" data-n="02" data-ex="50mm · f/1.8 · 1/1000 · ISO 100" aria-label="Open concept frame 02" aria-describedby="frame-02-detail"><span class="im"></span><span class="num">02</span><span class="sr-only" id="frame-02-detail">50mm, f/1.8, 1/1000, ISO 100</span></button>
     <button class="frame" style="--media:url('/media/playground-landscape.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-landscape.webp" data-alt="A still lake and mountain silhouettes at first light" data-n="03" data-ex="24mm · f/8.0 · 1/125 · ISO 400" aria-label="Open concept frame 03" aria-describedby="frame-03-detail"><span class="im"></span><span class="num">03</span><span class="sr-only" id="frame-03-detail">24mm, f/8.0, 1/125, ISO 400</span></button>
-    <button class="frame" style="--media:url('/media/playground-portrait.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-portrait.webp" data-alt="A cinematic portrait shaped by saturated light and shadow" data-n="04" data-ex="85mm · f/1.4 · 1/2000 · ISO 100" aria-label="Open concept frame 04" aria-describedby="frame-04-detail"><span class="im"></span><span class="num">04</span><span class="sr-only" id="frame-04-detail">85mm, f/1.4, 1/2000, ISO 100</span></button>
+    <button class="frame" style="--media:url('/media/playground-portrait.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-portrait.webp" data-alt="A cinematic portrait shaped by saturated light and shadow" data-n="04" data-ex="85mm · f/1.4 · 1/2000 · ISO 100" data-secret="The side work is the reset: no brief, no metric, just attention." aria-label="Open concept frame 04" aria-describedby="frame-04-detail"><span class="im"></span><span class="num">04</span><span class="sr-only" id="frame-04-detail">85mm, f/1.4, 1/2000, ISO 100. Hidden note: the side work is the reset.</span></button>
     <button class="frame" style="--media:url('/media/playground-travel.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-travel.webp" data-alt="A solitary figure facing a calm lake at dawn" data-n="05" data-ex="35mm · f/5.6 · 1/60 · ISO 800" aria-label="Open concept frame 05" aria-describedby="frame-05-detail"><span class="im"></span><span class="num">05</span><span class="sr-only" id="frame-05-detail">35mm, f/5.6, 1/60, ISO 800</span></button>
   </div>
   <div class="sheetaid" aria-hidden="true"><span id="sheetcount">Frame 1 of 5</span><span>Swipe to continue →</span></div>
@@ -817,6 +921,7 @@ body.reading-mode .rulerline{max-width:48ch}
     <a class="btn" href="https://github.com/yashkanttiwary/yash-kant-tiwary-portfolio/blob/main/MEDIA-CREDITS.md" target="_blank" rel="noopener noreferrer"><span class="ic" aria-hidden="true">©</span><span><b>Media credits</b><span class="btnmeta">Concept sources and licences</span></span></a>
   </div>
   <p class="decknote">The résumé is ready to attach if you're forwarding this to someone.</p>
+  <p class="finalquestion">What should we make first?</p>
   <footer><span>Yash Kant Tiwary, Bangalore</span><span id="foothint">Bangalore · India</span></footer>
 </section>
 </main>
@@ -914,6 +1019,16 @@ calmToggle.addEventListener('click',function(){
 readToggle.addEventListener('click',function(){
   setMode(readToggle,'reading-mode',!d.body.classList.contains('reading-mode'));
   recalcTotal(); placeMarkers(); lastP=-1; if(!calm) requestPaint();
+});
+
+/* ---------- visitor route — a fast branch, never a gate ---------- */
+$$('[data-route]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    $$('[data-route]').forEach(function(n){n.classList.remove('on'); n.setAttribute('aria-pressed','false');});
+    btn.classList.add('on'); btn.setAttribute('aria-pressed','true');
+    var target=$('#'+btn.dataset.route);
+    if(target){ say(btn.dataset.route==='work'?'Craft cut selected':'Operations cut selected'); goToEl(target); }
+  });
 });
 
 function p2(n){return (n<10?'0':'')+n;}
@@ -1180,11 +1295,15 @@ function jumpMarker(dir){
   stop(); reduce?goTo(n,false):w.scrollTo({top:clamp(n,0,maxS()),behavior:'smooth'});
 }
 
-/* ---------- filmstrip hover-scrub ---------- */
+/* ---------- three media behaviours: scrub, compare, build ---------- */
 $$('.thumb').forEach(function(th){
   var cells=$$('.strip span',th), ph=$('.ph',th), out=$('.tcout',th), base=th.dataset.tc, lastIdx=-1;
+  var mode=th.dataset.mode||'open', compare=$('.compareveil',th), build=$('.buildstat b',th);
   th.addEventListener('mousemove',function(e){
     var r=th.getBoundingClientRect(), p=clamp((e.clientX-r.left)/r.width,0,.999);
+    if(mode==='compare'&&compare){ compare.style.width=(p*100).toFixed(1)+'%'; return; }
+    if(mode==='build'&&build){ build.textContent=p>.96?'1,000+':String(Math.max(1,Math.round(p*1000))); return; }
+    if(mode!=='scrub')return;
     var idx=Math.floor(p*cells.length);
     if(idx!==lastIdx){
       if(lastIdx>-1&&cells[lastIdx]) cells[lastIdx].classList.remove('act');
@@ -1196,8 +1315,43 @@ $$('.thumb').forEach(function(th){
     out.textContent=parts[0]+':'+parts[1]+':'+p2((+parts[2]+Math.floor(p*8))%60)+':'+p2(Math.floor(p*24));
   },{passive:true});
   th.addEventListener('mouseleave',function(){
+    if(mode==='compare'&&compare){ compare.style.width='50%'; return; }
+    if(mode==='build'&&build){ build.textContent='0'; return; }
+    if(mode!=='scrub')return;
     if(lastIdx>-1&&cells[lastIdx]) cells[lastIdx].classList.remove('act');
     lastIdx=-1; out.textContent=base;
+  });
+});
+
+/* ---------- choice points ---------- */
+function choose(group,button){
+  $$(group).forEach(function(n){n.classList.toggle('on',n===button); n.setAttribute('aria-pressed',n===button?'true':'false');});
+}
+$$('[data-scale]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    choose('[data-scale]',btn);
+    var exact=btn.dataset.scale==='100';
+    $('#scalefeedback').innerHTML=exact?'<strong>Exactly.</strong> 100+ videos, plus 200–300 creatives. The system made the team larger than its headcount.':'<strong>The reveal: 100+.</strong> The limit was not five pairs of hands. It was how decisions moved.';
+    var ans=$('#scaleanswer'); ans.hidden=false; $$('.rv',ans).forEach(function(n){n.classList.add('in');});
+    recalcTotal(); placeMarkers(); requestPaint();
+  });
+});
+$$('[data-skill]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    choose('[data-skill]',btn);
+    var exact=btn.dataset.skill==='engine';
+    $('#skillfeedback').innerHTML=exact?'<strong>That was the move.</strong> One content engine ran across YouTube, Telegram, and paid.':'<strong>A defensible call.</strong> I chose one content engine first, then used each channel to compound it.';
+  });
+});
+$$('[data-turn]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    choose('[data-turn]',btn);
+    var guess=+btn.dataset.turn, ans=$('#turnanswer'), ghost=$('#turnghost'), fill=$('.bar.after .fill');
+    ghost.style.left=guess+'%'; ans.hidden=false;
+    $('#turnfeedback').innerHTML=guess===34?'<strong>You called it.</strong> Review fell to about half a day.':'<strong>It moved further.</strong> Review fell from 1–1.5 days to about half a day.';
+    fill.style.width='0'; fill.style.transition=reduce?'none':'width .7s cubic-bezier(.16,1,.3,1)';
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){fill.style.width=fill.dataset.w;}); });
+    recalcTotal(); placeMarkers(); requestPaint();
   });
 });
 
@@ -1302,6 +1456,7 @@ function showExif(f){
   var b=d.createElement('b'); b.textContent=f.dataset.n; a.appendChild(b);
   var c=d.createElement('span'); c.className='machine'; c.textContent=f.dataset.ex;
   exif.appendChild(a); exif.appendChild(c);
+  if(f.dataset.secret){ var secret=d.createElement('span'); secret.className='lootsecret'; secret.textContent=f.dataset.secret; exif.appendChild(secret); }
 }
 $$('.frame').forEach(function(f){
   f.addEventListener('mouseenter',function(){showExif(f);});
@@ -1493,18 +1648,6 @@ d.addEventListener('keydown',function(e){
   else if(k==='ArrowRight'){ if(isInteractive(d.activeElement))return; e.preventDefault(); jumpMarker(1); }
   else if(k==='ArrowLeft'){ if(isInteractive(d.activeElement))return; e.preventDefault(); jumpMarker(-1); }
 });
-
-/* ---------- system bar ---------- */
-var fill=$('.bar.after .fill'), barDone=false;
-new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    if(!e.isIntersecting||barDone)return;
-    barDone=true;
-    if(reduce){ fill.style.width=fill.dataset.w; return; }
-    fill.style.transition='width .7s cubic-bezier(.16,1,.3,1)';
-    setTimeout(function(){ fill.style.width=fill.dataset.w; },340);
-  });
-},{threshold:.35}).observe($('#system'));
 
 /* ---------- resize / init ---------- */
 var rzT;

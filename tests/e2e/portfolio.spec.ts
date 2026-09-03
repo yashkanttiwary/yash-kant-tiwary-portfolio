@@ -155,6 +155,33 @@ test("supports stage, career, and contact-sheet inspectors", async ({ page }) =>
   await expect(page.locator("#exif")).toContainText("24mm");
 });
 
+test("turns Batch 10 choices into useful reveals without blocking the reel", async ({ page }) => {
+  await page.goto("/?skip=1");
+
+  await page.getByRole("button", { name: /Show me the work/ }).click();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  await page.locator("#scale").scrollIntoViewIfNeeded();
+  await expect(page.locator("#scaleanswer")).toBeHidden();
+  await page.getByRole("button", { name: "About 50" }).click();
+  await expect(page.locator("#scaleanswer")).toBeVisible();
+  await expect(page.locator("#scalefeedback")).toContainText("100+");
+
+  await page.locator("#work").scrollIntoViewIfNeeded();
+  await page.getByRole("button", { name: "One content engine" }).click();
+  await expect(page.locator("#skillfeedback")).toContainText("That was the move");
+
+  await page.locator("#system").scrollIntoViewIfNeeded();
+  await page.getByRole("button", { name: "About a day" }).click();
+  await expect(page.locator("#turnanswer")).toBeVisible();
+  await expect(page.locator("#turnghost")).toHaveCSS("left", /px$/);
+  await expect(page.locator(".warroom")).toContainText("craft, operations, and feedback");
+
+  const secretFrame = page.getByRole("button", { name: "Open concept frame 04" });
+  await secretFrame.focus();
+  await expect(page.locator("#exif")).toContainText("no brief, no metric");
+});
+
 test("opens the searchable command palette and jumps to a result", async ({ page }) => {
   await page.goto("/?skip=1");
   await page.keyboard.press(process.platform === "darwin" ? "Meta+K" : "Control+K");
