@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0 && npm run typecheck",
     "validate": "node scripts/validate-content.mjs",
-    "test:browser": "playwright test",
+    "test:browser": "playwright test portfolio.spec.ts performance.spec.ts",
     "test:functional": "playwright test portfolio.spec.ts performance.spec.ts",
     "test:visual": "playwright test visual.spec.ts --project=chromium",
     "test": "npm run validate && npm run lint && npm run build && npm run test:browser"

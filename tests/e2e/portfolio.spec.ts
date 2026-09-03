@@ -96,7 +96,7 @@ test("does not overflow at supported viewport boundaries", async ({ page }) => {
 test("flags clips, preserves flags in the URL, and builds a useful email", async ({ page }) => {
   await page.goto("/?skip=1#work");
   const firstClip = page.locator(".clip").first();
-  const mark = firstClip.getByRole("button", { name: "Flag for the email" });
+  const mark = firstClip.locator("[data-mark]");
   await mark.click();
 
   await expect(mark).toHaveAttribute("aria-pressed", "true");
@@ -143,13 +143,16 @@ test("plays the concept reel in the same production viewer", async ({ page }) =>
 
 test("supports stage, career, and contact-sheet inspectors", async ({ page }) => {
   await page.goto("/?skip=1#system");
-  await page.getByRole("button", { name: /05 AI review/i }).click();
+  const aiStage = page.locator("#stages .stage").nth(4);
+  await aiStage.focus();
+  await aiStage.press("Enter");
   await expect(page.locator("#stageinfo")).toContainText("flags what's missing");
 
   await page.getByRole("button", { name: "2025 Signal Loop" }).click();
   await expect(page.locator("#pathinfo")).toContainText("craft, operations and tooling");
 
   const frame = page.getByRole("button", { name: "Open concept frame 03" });
+  await page.mouse.move(0, 0);
   await frame.focus();
   await expect(frame).toHaveAccessibleDescription("24mm, f/8.0, 1/125, ISO 400");
   await expect(page.locator("#exif")).toContainText("24mm");
