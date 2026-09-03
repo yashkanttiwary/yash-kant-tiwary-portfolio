@@ -52,6 +52,24 @@ test("exposes a valid section outline without decorative emphasis semantics", as
   expect(invalidLabels).toBe(0);
 });
 
+test("uses one section vocabulary and separates words from machine data", async ({ page }) => {
+  await page.goto("/?skip=1");
+  const expected = ["Reel", "Scale", "Clips", "How it's made", "How he got here", "Contact sheet", "Say hi"];
+  await expect(page.locator(".rail .nm")).toHaveText(expected);
+  expect(await page.locator("main section").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-mk")))).toEqual(expected);
+  await expect(page.locator(".slug .rt")).toHaveText(["4 figures", "5 clips", "7 stages", "9 years", "5 frames", "5 actions"]);
+
+  const wordStyle = await page.locator(".rail .nm").nth(3).evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { family: style.fontFamily, transform: style.textTransform, spacing: parseFloat(style.letterSpacing) };
+  });
+  expect(wordStyle.family).toContain("Archivo");
+  expect(wordStyle.transform).toBe("none");
+  expect(wordStyle.spacing).toBeLessThanOrEqual(0.5);
+  await expect(page.locator(".rail .tc").first()).toHaveCSS("font-family", /JetBrains Mono/);
+  await expect(page.locator(".syscopy .sysbody")).toHaveCount(3);
+});
+
 test("keeps focus inside the opening clapper until it clears", async ({ page }) => {
   await page.goto("/", { waitUntil: "domcontentloaded" });
   const slate = page.locator("#slate");
@@ -123,7 +141,7 @@ test("plays the concept reel in the same production viewer", async ({ page }) =>
 
 test("supports stage, career, and contact-sheet inspectors", async ({ page }) => {
   await page.goto("/?skip=1#system");
-  await page.getByRole("button", { name: /05 AI REVIEW/ }).click();
+  await page.getByRole("button", { name: /05 AI review/i }).click();
   await expect(page.locator("#stageinfo")).toContainText("flags what's missing");
 
   await page.getByRole("button", { name: "2025 AI systems" }).click();
