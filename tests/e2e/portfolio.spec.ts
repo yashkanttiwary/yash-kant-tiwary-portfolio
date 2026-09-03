@@ -54,7 +54,7 @@ test("exposes a valid section outline without decorative emphasis semantics", as
 
 test("uses one section vocabulary and separates words from machine data", async ({ page }) => {
   await page.goto("/?skip=1");
-  const expected = ["Reel", "Scale", "Clips", "How it's made", "How he got here", "Contact sheet", "Say hi"];
+  const expected = ["Reel", "Scale", "Clips", "How it's made", "How I got here", "Contact sheet", "Say hi"];
   await expect(page.locator(".rail .nm")).toHaveText(expected);
   expect(await page.locator("main section").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-mk")))).toEqual(expected);
   await expect(page.locator(".slug .rt")).toHaveText(["4 figures", "5 clips", "7 stages", "9 years", "5 frames", "5 actions"]);
@@ -144,7 +144,7 @@ test("supports stage, career, and contact-sheet inspectors", async ({ page }) =>
   await page.getByRole("button", { name: /05 AI review/i }).click();
   await expect(page.locator("#stageinfo")).toContainText("flags what's missing");
 
-  await page.getByRole("button", { name: "2025 AI systems" }).click();
+  await page.getByRole("button", { name: "2025 Signal Loop" }).click();
   await expect(page.locator("#pathinfo")).toContainText("craft, operations and tooling");
 
   const frame = page.getByRole("button", { name: "Open concept frame 03" });

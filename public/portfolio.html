@@ -97,27 +97,40 @@ body.cursor-on #cur{display:block}
   font-family:'Archivo',system-ui,sans-serif;border-left:2px solid transparent;transition:.2s}
 .rail a .tc{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px}
 .rail a .nm{display:block;font-size:var(--xs);margin-top:2px;letter-spacing:.025em;line-height:1.2}
+.rail .rg{position:absolute;right:8px;top:10px;color:var(--chrome);font-size:11px;line-height:1}
 .rail a:hover{color:var(--ink)}
 .rail a.on{color:var(--ink);border-left-color:var(--mark)}
 .rail a.on .tc{color:var(--mark)}
+.rail a.on .rg{color:var(--mark)}
 
 main{margin-left:var(--rail);padding-bottom:calc(var(--bar) + 28px)}
-section{position:relative;padding:0 var(--pad) 52px;scroll-margin-top:18px}
-#system{padding-top:14px}
+section{position:relative;padding:0 var(--pad) 68px;scroll-margin-top:18px}
+main section:not(#top){padding-top:52px;padding-bottom:78px;border-top:1px solid var(--rule)}
+main section:nth-of-type(even){background:linear-gradient(110deg,rgba(255,255,255,.023),transparent 58%)}
+#system{padding-top:52px}
 .slug{display:grid;grid-template-columns:auto auto minmax(24px,1fr) auto;align-items:center;gap:16px;
-  border-top:1px solid var(--rule);padding-top:18px;margin-bottom:34px;
+  padding-top:0;margin-bottom:34px;
   font-size:inherit;font-weight:400;line-height:inherit}
-.slug .tc{color:var(--mark);font-size:10.5px;letter-spacing:.08em}
+.slug .tc{color:var(--bg);background:var(--mark);padding:5px 7px;font-size:10.5px;
+  font-weight:700;letter-spacing:.08em}
 .slug .lbl{color:var(--ink);font-family:'Archivo',system-ui,sans-serif;
   font-size:clamp(1.55rem,3.2vw,2.65rem);font-weight:650;line-height:1;letter-spacing:-.025em}
 .slug .rule{flex:1;height:1px;background:var(--rule)}
 .slug .rt{color:var(--chrome);font-family:'Archivo',system-ui,sans-serif;font-size:var(--xs);letter-spacing:.03em}
+.framing{max-width:58ch;margin:-10px 0 32px;color:var(--body);font-size:clamp(1.02rem,1.7vw,1.2rem);
+  line-height:1.5;letter-spacing:-.01em}
+.framing.flare{border-left:2px solid var(--mark);background:linear-gradient(90deg,rgba(255,106,43,.09),transparent);
+  padding:12px 15px;margin-top:-12px}
+.bridge{max-width:62ch;margin-top:38px;padding-top:16px;border-top:1px dashed var(--rule);
+  color:var(--chrome);font-size:.92rem;line-height:1.5}
+.bridge::after{content:" \2192";color:var(--mark)}
 
 /* ===== HERO ===== */
 #top{padding-top:clamp(34px,6vh,72px)}
 h1{font-weight:800;letter-spacing:-.045em;line-height:.85;font-size:clamp(3rem,12vw,10.5rem);text-transform:uppercase}
 h1 .l2{display:block;color:var(--dim)}
 .hline{margin-top:20px;font-size:clamp(1rem,2vw,1.32rem);color:var(--body);letter-spacing:-.01em}
+#top .framing{margin:12px 0 0;color:var(--chrome);font-size:1rem}
 .hlinks{display:flex;flex-wrap:wrap;gap:20px;margin-top:22px;font-family:'Archivo',system-ui,sans-serif;
   font-size:10.5px;letter-spacing:.03em}
 .hlinks a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:3px}
@@ -179,13 +192,17 @@ h1 .l2{display:block;color:var(--dim)}
   cursor:pointer;transition:.18s}
 .markbtn:hover{color:var(--ink);border-color:var(--dim)}
 .markbtn.on{color:var(--mark);border-color:var(--mark);background:rgba(255,106,43,.08)}
-.lanes{display:grid;gap:11px;margin-bottom:16px}
-.lane{display:grid;grid-template-columns:84px 1fr;gap:13px;border-top:1px solid var(--rule);padding-top:8px}
-.lane .k{font-size:var(--xs);letter-spacing:.03em;color:var(--dim);padding-top:4px}
-.lane .t{font-size:.98rem;line-height:1.5;color:var(--body)}
-.figs{display:flex;flex-wrap:wrap;gap:7px}
-.fig{border:1px solid var(--rule);padding:5px 9px;font-family:'Archivo',system-ui,sans-serif;font-size:10px;
-  letter-spacing:.025em;color:var(--dim)}
+.lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-bottom:18px;border-top:1px solid var(--rule)}
+.lane{display:block;border-left:1px solid var(--rule);padding:10px 12px 0}
+.lane:first-child{border-left:0;padding-left:0}
+.lane .k{display:none;font-size:var(--xs);letter-spacing:.03em;color:var(--mark);margin-bottom:7px}
+.clip:first-of-type .lane .k{display:block}
+.lane .t{font-size:.9rem;line-height:1.48;color:var(--body)}
+.figs{display:grid;grid-template-columns:minmax(120px,1fr) auto auto;gap:10px;align-items:end}
+.fig{font-family:'Archivo',system-ui,sans-serif;font-size:10px;letter-spacing:.025em;color:var(--dim)}
+.fig:first-child{align-self:stretch;border-left:2px solid var(--mark);padding:1px 10px;color:var(--body)}
+.fig:first-child b{display:block;color:var(--mark);font-size:2rem;line-height:1;font-weight:650}
+.fig:not(:first-child){border-left:1px solid var(--rule);padding-left:10px;padding-bottom:2px;max-width:16ch}
 .fig b{color:var(--mark);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500}
 
 /* ===== CALL SHEET ===== */
@@ -214,6 +231,9 @@ h1 .l2{display:block;color:var(--dim)}
   font-size:.95rem;color:var(--body);line-height:1.5}
 #stageinfo b{color:var(--ink);font-weight:500;display:block;font-size:.8rem;letter-spacing:.03em;
   font-family:'Archivo',system-ui,sans-serif;margin-bottom:5px}
+.loopmap{display:block;width:100%;height:auto;margin:3px 0 0;overflow:visible;color:var(--mark)}
+.loopmap>path{fill:none;stroke:var(--mark);stroke-width:1.5;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+.loopmap text{fill:var(--mark);font-family:'Archivo',system-ui,sans-serif;font-size:12px;letter-spacing:.025em}
 .bars{display:grid;gap:11px;margin-top:24px;max-width:600px}
 .bar{display:grid;grid-template-columns:52px 1fr auto;gap:13px;align-items:center;font-family:'Archivo',system-ui,sans-serif;
   font-size:10px;letter-spacing:.025em;color:var(--dim)}
@@ -454,7 +474,11 @@ body.reading-mode .rulerline{max-width:48ch}
   .readout{grid-template-columns:1fr 1fr}
   .readout div:nth-child(3),.readout div:nth-child(4){border-top:1px solid var(--rule)}
   .readout div:nth-child(odd){border-left:none;padding-left:0}
-  .lane{grid-template-columns:1fr;gap:4px}
+  .lanes{grid-template-columns:1fr;border-top:0;gap:10px}
+  .lane,.lane:first-child{border-left:0;border-top:1px solid var(--rule);padding:8px 0 0}
+  .clip .lane .k{display:block}
+  .figs{grid-template-columns:1fr 1fr}
+  .fig:first-child{grid-column:1/-1}
   /* contact sheet becomes a scrollable strip — no stranded frame */
   .sheet{display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x mandatory;padding-bottom:6px;
     -webkit-overflow-scrolling:touch}
@@ -503,19 +527,20 @@ body.reading-mode .rulerline{max-width:48ch}
 
 <nav class="rail" aria-label="Sections">
   <div class="ticks" aria-hidden="true"></div>
-  <a href="#top" data-t="top" class="on"><span class="tc">00:00</span><span class="nm">Reel</span></a>
-  <a href="#scale" data-t="scale"><span class="tc">00:12</span><span class="nm">Scale</span></a>
-  <a href="#work" data-t="work"><span class="tc">00:28</span><span class="nm">Clips</span></a>
-  <a href="#system" data-t="system"><span class="tc">02:04</span><span class="nm">How it's made</span></a>
-  <a href="#path" data-t="path"><span class="tc">02:31</span><span class="nm">How he got here</span></a>
-  <a href="#sheet" data-t="sheet"><span class="tc">02:52</span><span class="nm">Contact sheet</span></a>
-  <a href="#say" data-t="say"><span class="tc">03:14</span><span class="nm">Say hi</span></a>
+  <a href="#top" data-t="top" class="on"><span class="rg" aria-hidden="true">●</span><span class="tc">00:00</span><span class="nm">Reel</span></a>
+  <a href="#scale" data-t="scale"><span class="rg" aria-hidden="true">∑</span><span class="tc">00:12</span><span class="nm">Scale</span></a>
+  <a href="#work" data-t="work"><span class="rg" aria-hidden="true">▶</span><span class="tc">00:28</span><span class="nm">Clips</span></a>
+  <a href="#system" data-t="system"><span class="rg" aria-hidden="true">⟳</span><span class="tc">02:04</span><span class="nm">How it's made</span></a>
+  <a href="#path" data-t="path"><span class="rg" aria-hidden="true">↗</span><span class="tc">02:31</span><span class="nm">How I got here</span></a>
+  <a href="#sheet" data-t="sheet"><span class="rg" aria-hidden="true">▦</span><span class="tc">02:52</span><span class="nm">Contact sheet</span></a>
+  <a href="#say" data-t="say"><span class="rg" aria-hidden="true">✦</span><span class="tc">03:14</span><span class="nm">Say hi</span></a>
 </nav>
 
 <main id="main">
 <section id="top" data-mk="Reel" aria-labelledby="top-heading">
   <h1 id="top-heading">Yash Kant<span class="l2">Tiwary</span></h1>
   <p class="hline">Creative producer. Video at volume. Bangalore.</p>
+  <p class="framing">I turn complex production into clear, repeatable output people can feel.</p>
   <div class="hlinks">
     <a href="#work"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12"></rect><path d="M2.5 8h15M6 4v4m4-4v4m4-4v4"></path></svg></span><span>Clips</span></a>
     <a href="#system"><span class="hic" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="4" cy="10" r="2"></circle><circle cx="16" cy="5" r="2"></circle><circle cx="16" cy="15" r="2"></circle><path d="M6 10h3c2.5 0 2.5-5 5-5M9 10c2.5 0 2.5 5 5 5"></path></svg></span><span>How it's made</span></a>
@@ -530,20 +555,24 @@ body.reading-mode .rulerline{max-width:48ch}
     <span class="play" aria-hidden="true">▶</span>
     <span class="monbtm mono"><span>REEL_2026_MASTER.MP4</span><span>1920×1080 · 24P</span><span>01:14</span></span>
   </button>
+  <p class="bridge">The reel sets the tone. The first test is whether the numbers hold.</p>
 </section>
 
 <section id="scale" data-mk="Scale" aria-labelledby="scale-heading">
   <h2 class="slug mono" id="scale-heading"><span class="tc">00:12</span><span class="lbl">Scale</span><span class="rule"></span><span class="rt">4 figures</span></h2>
+  <p class="framing flare">I use scale as the stress test: if the system bends, the craft breaks.</p>
   <div class="readout rv">
     <div><div class="v mono">100+</div><div class="k">Videos a month</div></div>
     <div><div class="v mono">200–300</div><div class="k">Creatives a month</div></div>
     <div><div class="v mono">5</div><div class="k">Person team, plus freelancers</div></div>
     <div><div class="v mono">~50%</div><div class="k">Faster turnaround</div></div>
   </div>
+  <p class="bridge">The numbers hold—but only because the clips show different kinds of control.</p>
 </section>
 
 <section id="work" data-mk="Clips" aria-labelledby="work-heading">
   <h2 class="slug mono" id="work-heading"><span class="tc">00:28</span><span class="lbl">Clips</span><span class="rule"></span><span class="rt" id="workrt">5 clips</span></h2>
+  <p class="framing">I chose these five clips because each solves a different production problem.</p>
 
   <article class="clip rv" data-title="PW IOI MBA launch">
     <button class="thumb" style="--media:url('/media/case-mba-launch.webp')" data-cur="Open" data-kind="image" data-src="/media/case-mba-launch.webp" data-alt="A professional camera crew filming a live event under magenta stage lights" data-file="PWIOI_MBA_LAUNCH.MP4" data-tc="00:00:28:04" aria-label="Open PW IOI MBA launch concept clip">
@@ -629,10 +658,12 @@ body.reading-mode .rulerline{max-width:48ch}
       <div class="figs"><span class="fig"><b>100+</b> videos a month</span><span class="fig"><b>200–300</b> creatives a month</span><span class="fig"><b>5</b> people led</span></div>
     </div>
   </article>
+  <p class="bridge">Five different problems leave one question: what made that consistency possible?</p>
 </section>
 
 <section id="system" data-mk="How it's made" aria-labelledby="system-heading">
   <h2 class="slug mono" id="system-heading"><span class="tc">02:04</span><span class="lbl">How it's made</span><span class="rule"></span><span class="rt">7 stages</span></h2>
+  <p class="framing flare">I call it the Signal Loop: audience signals shape the brief, and results shape the next one.</p>
   <div class="callsheet rv">
     <div class="cshead mono">
       <span>Doc <b class="machine">PRODUCTION_SYSTEM_V4</b></span>
@@ -643,7 +674,7 @@ body.reading-mode .rulerline{max-width:48ch}
     <div class="csbody">
       <div class="syscopy">
         <p class="sysbody">Volume doesn't come from working faster. It comes from removing work that never needed a person.</p>
-        <p class="sysbody">My system watches raw footage, flags what's missing, marks the moments and pre-times the cuts.</p>
+        <p class="sysbody">The Signal Loop watches raw footage, flags what's missing, marks the moments and pre-times the cuts.</p>
         <p class="sysbody">The team's hours go where they matter: judgement, not scrubbing timelines.</p>
       </div>
 
@@ -656,7 +687,12 @@ body.reading-mode .rulerline{max-width:48ch}
         <button class="stage" data-cur="Inspect" data-i="Editors open a marked-up timeline instead of raw rushes. That's where the half-day came from."><span class="n mono">06</span><span class="t">Editing</span></button>
         <button class="stage" data-cur="Inspect" data-i="Out across YouTube, Telegram, web and paid — then the numbers come back and feed the next research pass."><span class="n mono">07</span><span class="t">Distribution</span></button>
       </div>
-      <div class="loopline" aria-hidden="true"><span>What the data says</span></div>
+      <svg class="loopmap" viewBox="0 0 1000 86" role="img" aria-labelledby="loop-title">
+        <title id="loop-title">The Signal Loop returns distribution results to audience research.</title>
+        <defs><marker id="loop-arrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="currentColor"></path></marker></defs>
+        <path d="M960 8 V20 C960 66 40 66 40 20 V8" marker-end="url(#loop-arrow)"></path>
+        <text x="500" y="77" text-anchor="middle">Performance returns to audience research</text>
+      </svg>
       <div id="stageinfo" role="status" aria-live="polite"><b>Select a stage</b>Click any stage above to see what happens inside it.</div>
 
       <div class="bars">
@@ -665,11 +701,12 @@ body.reading-mode .rulerline{max-width:48ch}
       </div>
     </div>
   </div>
+  <p class="bridge">The Signal Loop explains the output. The timeline explains how I learned to build it.</p>
 </section>
 
-<section id="path" data-mk="How he got here" aria-labelledby="path-heading">
-  <h2 class="slug mono" id="path-heading"><span class="tc">02:31</span><span class="lbl">How he got here</span><span class="rule"></span><span class="rt">9 years</span></h2>
-  <p class="rulerline rv">From one camera to a content system. Nothing in between was wasted.</p>
+<section id="path" data-mk="How I got here" aria-labelledby="path-heading">
+  <h2 class="slug mono" id="path-heading"><span class="tc">02:31</span><span class="lbl">How I got here</span><span class="rule"></span><span class="rt">9 years</span></h2>
+  <p class="rulerline framing rv">I started with a camera. Every step since then added a new layer to the same frame.</p>
   <div class="ruler rv" id="ruler">
     <button data-d="A camera and a fine-arts photography course. Everything downstream is still built on framing."><span class="y mono">2017</span><span class="l">Photography</span></button>
     <button data-d="Moving pictures, and the discovery that a shot only means something next to another shot."><span class="y mono">2021</span><span class="l">Film</span></button>
@@ -679,13 +716,15 @@ body.reading-mode .rulerline{max-width:48ch}
     <button data-d="Owning delivery end to end: shoot planning, schedules, budgets, getting it out the door."><span class="y mono">2025</span><span class="l">Production</span></button>
     <button data-d="Five people, freelancers and agencies. The job stopped being making and started being briefing."><span class="y mono">2025</span><span class="l">Leading teams</span></button>
     <button data-d="An MBA in marketing, and content that starts from positioning instead of from a shot list."><span class="y mono">2024</span><span class="l">Strategy</span></button>
-    <button data-d="A four-part production system that halved turnaround. Where craft, operations and tooling meet."><span class="y mono">2025</span><span class="l">AI systems</span></button>
+    <button data-d="The Signal Loop halved turnaround. It is where craft, operations and tooling meet."><span class="y mono">2025</span><span class="l">Signal Loop</span></button>
   </div>
   <div id="pathinfo" class="rv" role="status" aria-live="polite"><b>2017 — now</b>Click any point to see what it added.</div>
+  <p class="bridge">The path leads back to the camera, where looking closely still resets my eye.</p>
 </section>
 
 <section id="sheet" data-mk="Contact sheet" aria-labelledby="sheet-heading">
   <h2 class="slug mono" id="sheet-heading"><span class="tc">02:52</span><span class="lbl">Contact sheet</span><span class="rule"></span><span class="rt">5 frames</span></h2>
+  <p class="framing">The contact sheet is where production gives way to looking without a brief.</p>
   <div class="sheet rv" id="sheetgrid">
     <button class="frame" style="--media:url('/media/playground-water.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-water.webp" data-alt="Ocean waves folding over a rocky shoreline from above" data-n="01" data-ex="35mm · f/2.0 · 1/400 · ISO 200" aria-label="Open concept frame 01" aria-describedby="frame-01-detail"><span class="im"></span><span class="num">01</span><span class="sr-only" id="frame-01-detail">35mm, f/2.0, 1/400, ISO 200</span></button>
     <button class="frame" style="--media:url('/media/playground-morning.webp')" data-cur="Loupe" data-kind="image" data-src="/media/playground-morning.webp" data-alt="A quiet peach sunrise over the ocean" data-n="02" data-ex="50mm · f/1.8 · 1/1000 · ISO 100" aria-label="Open concept frame 02" aria-describedby="frame-02-detail"><span class="im"></span><span class="num">02</span><span class="sr-only" id="frame-02-detail">50mm, f/1.8, 1/1000, ISO 100</span></button>
@@ -696,10 +735,12 @@ body.reading-mode .rulerline{max-width:48ch}
   <div id="exif" class="rv"><span>Hover a frame</span></div>
   <p class="sheethint">5 licensed concept frames · final personal roll will replace them</p>
   <p class="sheetnote rv">This never started as a career. It started as a camera and somewhere to point it. I still shoot most weekends — mostly water, mostly early, mostly no one around.</p>
+  <p class="bridge">The last frame leaves one useful question: what could we build together?</p>
 </section>
 
 <section id="say" data-mk="Say hi" aria-labelledby="say-heading">
   <h2 class="slug mono" id="say-heading"><span class="tc">03:14</span><span class="lbl">Say hi</span><span class="rule"></span><span class="rt">5 actions</span></h2>
+  <p class="framing">I'm looking for producer roles where craft, systems, and scale have to work together.</p>
   <p><a class="big" id="mail" href="mailto:yashkanttiwary@gmail.com">yashkanttiwary@gmail.com</a><button class="copybtn" id="copymail">Copy</button></p>
   <p style="margin-top:13px"><a class="big" href="tel:+918383069094">+91 83830 69094</a></p>
 
